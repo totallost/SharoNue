@@ -13,6 +13,11 @@ namespace SharoNue.Helper
         public static Grid CreateCalendar(TapGestureRecognizer tgr, DateTime dt)
         {
             var grid = new Grid();
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.4, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.75, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.25, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.75, GridUnitType.Star) });
+            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1.5, GridUnitType.Star) });
 
             for (var i = 0; i < 5; i++)
             {
@@ -42,19 +47,19 @@ namespace SharoNue.Helper
                                 if (i == 2)
                                     grid.Children.Add(new Label
                                     {
-                                        Text = "Lunch",
+                                        Text = "Snack",
                                         ClassId = i.ToString() + j.ToString()
                                     }, j, i);
                                 if (i == 3)
                                     grid.Children.Add(new Label
                                     {
-                                        Text = "Dinner",
+                                        Text = "Lunch",
                                         ClassId = i.ToString() + j.ToString()
                                     }, j, i);
                                 if (i == 4)
                                     grid.Children.Add(new Label
                                     {
-                                        Text = "Snack",
+                                        Text = "Dinner",
                                         ClassId = i.ToString() + j.ToString()
                                     }, j, i);
                             }
