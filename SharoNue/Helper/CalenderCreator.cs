@@ -113,7 +113,7 @@ namespace SharoNue.Helper
                             var mealLines = mealsLines.Where(x => x.MealId == meal.MealId).ToList();
                             foreach (var line in mealLines)
                             {
-                                item.Text = item.Text + line.FoodDesc + "\n";
+                                item.Text = item.Text + "•" + line.FoodDesc + "\n";
                             }
                         }
                     }

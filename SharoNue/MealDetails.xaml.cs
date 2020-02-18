@@ -66,7 +66,7 @@ namespace SharoNue
                     }
                     break;
                 case "Copy to another day":
-                    await DisplayAlert("2", action, "cancel");
+                    
                     break;
                 case "Reset":
                     var isOk = await DisplayAlert("Delete", "Are you sure you want to Delete", "Delete", "Cancel");
