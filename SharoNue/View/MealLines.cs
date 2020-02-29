@@ -12,5 +12,6 @@ namespace SharoNue.View
         public int MealId { get; set; }
         public int MealTypeId { get; set; }
         public string FoodDesc { get; set; }
+        public bool IsMet { get; set; }
     }
 }

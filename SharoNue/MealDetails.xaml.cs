@@ -40,7 +40,7 @@ namespace SharoNue
             if (meal != null)
             {
                 List<MealLines> mealLinesFromDb = await _connection.Table<MealLines>().Where(x => x.MealId == meal.MealId).ToListAsync();
-                mealLines = new ObservableCollection<MealLines>(mealLinesFromDb);
+                mealLines = new ObservableCollection<MealLines>(mealLinesFromDb);   
             }
             listView.ItemsSource = mealLines;
 
@@ -67,6 +67,7 @@ namespace SharoNue
                     break;
                 case "Copy to another day":
                     
+                    await Navigation.PushAsync(new ChooseMealCalendar());
                     break;
                 case "Reset":
                     var isOk = await DisplayAlert("Delete", "Are you sure you want to Delete", "Delete", "Cancel");
@@ -110,5 +111,6 @@ namespace SharoNue
             }
 
         }
+
     }
 }
