@@ -66,8 +66,8 @@ namespace SharoNue
                     }
                     break;
                 case "Copy to another day":
-                    
-                    await Navigation.PushAsync(new ChooseMealCalendar());
+                    var checkedItems = mealLines.Where(x => x.IsMet == true).ToList();
+                    await Navigation.PushAsync(new ChooseMealCalendar(checkedItems));
                     break;
                 case "Reset":
                     var isOk = await DisplayAlert("Delete", "Are you sure you want to Delete", "Delete", "Cancel");

@@ -20,7 +20,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <CheckBox Grid.Column="0" BindingContext="{Binding IsMet}" />
+                            <CheckBox Grid.Column="0" IsChecked="{Binding IsMet}" />
                             <Label Text="{Binding FoodDesc}" FontSize="Medium" TextColor="Black" Grid.Column="1"/>
                             <Button Text="Edit" Grid.Column="2" Clicked="Edit_Button_Clicked" CommandParameter="{Binding .}"/>
                             <Button Text="Delete" Grid.Column="3" Clicked="Delete_Button_Clicked" CommandParameter="{Binding .}"/>
