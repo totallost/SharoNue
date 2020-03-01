@@ -33,7 +33,7 @@ namespace SharoNue
 
         async private void Button_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new weeklyCalendar());
+            await Navigation.PushAsync(new weeklyCalendar(0));
         }
     }
 }

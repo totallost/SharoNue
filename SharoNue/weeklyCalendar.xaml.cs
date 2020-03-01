@@ -16,12 +16,14 @@ namespace SharoNue
     {
         private SQLiteAsyncConnection _connection;
         private Grid _grid;
-        public weeklyCalendar()
+        private int DaysFromToday;
+        public weeklyCalendar(int i)
         {
             InitializeComponent();
+            DaysFromToday += i;
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 
-            _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now);
+            _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now.AddDays(DaysFromToday));
 
             Content = _grid;
 
@@ -29,7 +31,7 @@ namespace SharoNue
 
         protected override async void OnAppearing()
         {
-            await CalenderCreator.PopulateLabels(_grid, DateTime.Now);
+            await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(DaysFromToday));
             base.OnAppearing();
         }
 
@@ -69,7 +71,7 @@ namespace SharoNue
             {
                     MealDay = dayId,
                     MealType = mealID,
-                    MealDate = HelperMethods.WeekDays(dayId, DateTime.Now),
+                    MealDate = HelperMethods.WeekDays(dayId, DateTime.Now.AddDays(DaysFromToday)),
             };
             int mealIdFromDb = 0;
             if (meal != null)
@@ -78,6 +80,22 @@ namespace SharoNue
                 mealIdFromDb = meal.MealId;
             }
             return mealIdFromDb;
+        }
+
+        private async void ToolbarItem_Clicked(object sender, EventArgs e)
+        {
+            ToolbarItem toolBarItem = (ToolbarItem)sender;
+            if (toolBarItem.Text == "Next")
+            {
+                DaysFromToday += 7;
+                await Navigation.PushAsync(new weeklyCalendar(DaysFromToday));  
+            }
+            else
+            {
+                DaysFromToday -= 7;
+                await Navigation.PushAsync(new weeklyCalendar(DaysFromToday));
+            }
+                
         }
     }
 }

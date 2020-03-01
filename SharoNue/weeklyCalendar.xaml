@@ -5,4 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="SharoNue.weeklyCalendar">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Previus" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="Next" Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
 </ContentPage>
