@@ -97,5 +97,10 @@ namespace SharoNue
             }
                 
         }
+
+        private async void AutoPopulate_Clicked(object sender, EventArgs e)
+        {
+
+        }
     }
 }

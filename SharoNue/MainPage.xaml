@@ -13,7 +13,8 @@
                 HorizontalOptions="Center"
                 Clicked="Button_Clicked"/>
         <Button Text="Courses"
-                HorizontalOptions="Center"/>
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked_1"/>
         <Button Text="Future Menu"
                 HorizontalOptions="Center"/>
         <Button Text="Next Week Menu"

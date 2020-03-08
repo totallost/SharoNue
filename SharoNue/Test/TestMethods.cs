@@ -54,7 +54,48 @@ namespace SharoNue.Test
 
                 }
             }
-
         }
+        public static async Task PopulateFoods()
+        {
+            SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            List<FoodTypes> foodTypes = new List<FoodTypes>();
+            foodTypes.Add(new FoodTypes
+            {
+                FoodTypeDescription = "Carbs",
+                Id = 1
+            });
+            foodTypes.Add(new FoodTypes
+            {
+                FoodTypeDescription = "vegtables",
+                Id = 2
+            });
+            foodTypes.Add(new FoodTypes
+            {
+                FoodTypeDescription = "Protein",
+                Id = 3
+            });
+            await _connection.InsertAllAsync(foodTypes);
+            List<Foods> foods = new List<Foods>();
+            foods.Add(new Foods
+            {
+                FoodDescription = "Duck",
+                FoodType = 3,
+                Id  =1 
+            });
+            foods.Add(new Foods
+            {
+                FoodDescription = "Tomato",
+                FoodType = 2,
+                Id = 2
+            });
+            foods.Add(new Foods
+            {
+                FoodDescription = "Bread",
+                FoodType = 1,
+                Id = 3
+            });
+            await _connection.InsertAllAsync(foods);
+        }
+
     }
 }

@@ -35,5 +35,10 @@ namespace SharoNue
         {
             await Navigation.PushAsync(new weeklyCalendar(0));
         }
+
+        async private void Button_Clicked_1(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new FoodMenu());
+        }
     }
 }

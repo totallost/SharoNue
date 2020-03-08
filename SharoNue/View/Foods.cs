@@ -7,7 +7,7 @@ namespace SharoNue.View
 {
     class Foods
     {
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string FoodDescription { get; set; }
         public int FoodType { get; set; }
