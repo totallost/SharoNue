@@ -1,5 +1,6 @@
 ﻿using SharoNue.Helper;
 using SharoNue.Persistance;
+using SharoNue.Test;
 using SharoNue.View;
 using SQLite;
 using System;
@@ -16,14 +17,14 @@ namespace SharoNue
     {
         private SQLiteAsyncConnection _connection;
         private Grid _grid;
-        private int DaysFromToday;
+        //private int DaysFromToday;
         public weeklyCalendar(int i)
         {
             InitializeComponent();
-            DaysFromToday += i;
+            //MainPage.DaysFromToday += i;
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 
-            _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now.AddDays(DaysFromToday));
+            _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now.AddDays(MainPage.DaysFromToday));
 
             Content = _grid;
 
@@ -31,7 +32,7 @@ namespace SharoNue
 
         protected override async void OnAppearing()
         {
-            await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(DaysFromToday));
+            await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
             base.OnAppearing();
         }
 
@@ -71,7 +72,7 @@ namespace SharoNue
             {
                     MealDay = dayId,
                     MealType = mealID,
-                    MealDate = HelperMethods.WeekDays(dayId, DateTime.Now.AddDays(DaysFromToday)),
+                    MealDate = HelperMethods.WeekDays(dayId, DateTime.Now.AddDays(MainPage.DaysFromToday)),
             };
             int mealIdFromDb = 0;
             if (meal != null)
@@ -87,20 +88,34 @@ namespace SharoNue
             ToolbarItem toolBarItem = (ToolbarItem)sender;
             if (toolBarItem.Text == "Next")
             {
-                DaysFromToday += 7;
-                await Navigation.PushAsync(new weeklyCalendar(DaysFromToday));  
+                MainPage.DaysFromToday += 7;
+                if (MainPage.DaysFromToday <= 0)
+                {
+                    await Navigation.PopAsync(true);
+                }
+                else
+                {
+                    await Navigation.PushAsync(new weeklyCalendar(MainPage.DaysFromToday));
+                }
             }
             else
             {
-                DaysFromToday -= 7;
-                await Navigation.PushAsync(new weeklyCalendar(DaysFromToday));
+                MainPage.DaysFromToday -= 7;
+                if (MainPage.DaysFromToday >= 0)
+                {
+                    await Navigation.PopAsync(true);
+                }
+                else
+                {
+                    await Navigation.PushAsync(new weeklyCalendar(MainPage.DaysFromToday));
+                }
             }
                 
         }
 
         private async void AutoPopulate_Clicked(object sender, EventArgs e)
         {
-
+            await TestMethods.populateDatabase(_grid, MainPage.DaysFromToday);
         }
     }
 }

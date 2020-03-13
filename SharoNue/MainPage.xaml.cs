@@ -12,6 +12,7 @@ namespace SharoNue
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        static public int DaysFromToday=0;
         private SQLiteAsyncConnection _connection;
         public MainPage()
         {
@@ -33,6 +34,7 @@ namespace SharoNue
 
         async private void Button_Clicked(object sender, EventArgs e)
         {
+            DaysFromToday = 0;
             await Navigation.PushAsync(new weeklyCalendar(0));
         }
 
