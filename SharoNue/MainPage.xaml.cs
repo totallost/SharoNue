@@ -1,4 +1,5 @@
-﻿using SharoNue.Persistance;
+﻿using SharoNue.Helper;
+using SharoNue.Persistance;
 using SharoNue.View;
 using SQLite;
 using System;
@@ -28,6 +29,7 @@ namespace SharoNue
             await _connection.CreateTableAsync<MealTypes>();
             await _connection.CreateTableAsync<FoodTypes>();
             await _connection.CreateTableAsync<test>();
+            await _connection.CreateTableAsync<Settings>();
 
             base.OnAppearing();
         }

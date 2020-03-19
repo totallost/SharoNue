@@ -75,6 +75,19 @@ namespace SharoNue.Test
                 }
             }
         }
+        public static async Task PopulateMeal(Meal meal, List<Foods> foods)
+        {
+            List<MealLines> mealLines= new List<MealLines>();
+            //breakfast
+            if (meal.MealType == 0)
+            {
+                //friday and saturday only
+                if(meal.MealDay ==6 || meal.MealDay == 5)
+                {
+                    Foods food = foods.Where(x => x.Id == 1).SingleOrDefault();
+                }
+            }
+        }
         public static async Task PopulateFoods()
         {
             SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();

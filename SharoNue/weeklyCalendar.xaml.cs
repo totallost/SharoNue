@@ -28,6 +28,7 @@ namespace SharoNue
 
             Content = _grid;
 
+
         }
 
         protected override async void OnAppearing()
@@ -115,7 +116,18 @@ namespace SharoNue
 
         private async void AutoPopulate_Clicked(object sender, EventArgs e)
         {
+            CreateSettings();
+
             await TestMethods.populateDatabase(_grid, MainPage.DaysFromToday);
+        }
+
+        private async void CreateSettings()
+        {
+            var settings = await _connection.Table<Settings>().ToListAsync();
+            if (settings.Count() == 0)
+            {
+                DefaultSettings.SetDefaultSettings();
+            }
         }
     }
 }

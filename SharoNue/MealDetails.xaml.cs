@@ -67,6 +67,11 @@ namespace SharoNue
                     break;
                 case "Copy to another day":
                     var checkedItems = mealLines.Where(x => x.IsMet == true).ToList();
+                    if(checkedItems.Count()==0)
+                    {
+                        await DisplayAlert("Warning", "You didn't select any Meal" , "OK");
+                        break;
+                    }
                     await Navigation.PushAsync(new ChooseMealCalendar(checkedItems));
                     break;
                 case "Reset":
