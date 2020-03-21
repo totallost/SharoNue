@@ -17,5 +17,12 @@ namespace SharoNue.Helper
             return dt.AddDays(-1 * diff + day).Date;
         }
     }
+    public enum MealType
+    {
+        Breakfast = 1,
+        Snack,
+        Lunch,
+        Dinner
+    }
     
 }

@@ -51,15 +51,17 @@ namespace SharoNue
             switch (action)
             {
                 case "Add New Food":
-                    await Navigation.PushAsync(new AddNewFood());
+                    await Navigation.PushAsync(new AddNewFood(null));
                     break;
                 case "Go to Food Types":
                     break;
             }
         }
-        private void Edit_Button_Clicked(object sender, EventArgs e)
+        private async void Edit_Button_Clicked(object sender, EventArgs e)
         {
-
+            var itemsender = (Button)sender;
+            Foods item = (Foods)itemsender?.CommandParameter;
+            await Navigation.PushAsync(new AddNewFood(item));
         }
         private async void Delete_Button_Clicked(object sender, EventArgs e)
         {

@@ -14,7 +14,18 @@
                     SelectedIndex="{Binding Id}" 
                     ItemDisplayBinding="{Binding FoodTypeDescription}">
             </Picker>
-            <Button Text="Add" Clicked="Add_Button_Clicked"/>
+            <Label Text="Breakfast"/>
+            <CheckBox x:Name="ChkBreakfast"/>
+
+            <Label Text="Snack"/>            
+            <CheckBox x:Name="ChkSnack"/>
+
+            <Label Text="Lunch"/>            
+            <CheckBox x:Name="ChkLunch"/>
+
+            <Label Text="Dinner"/>
+            <CheckBox x:Name="ChkDinner"/>
+            <Button Text="Add" Clicked="Add_Button_Clicked" x:Name="Btn"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

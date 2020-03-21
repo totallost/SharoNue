@@ -10,5 +10,6 @@ namespace SharoNue.View
         [PrimaryKey]
         public int Id { get; set; }
         public string MealTypeDescription { get; set; }
+        public string Foods { get; set; }
     }
 }
