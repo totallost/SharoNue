@@ -18,6 +18,7 @@ namespace SharoNue.Test
             SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             List<Meal> meals = new List<Meal>();
             var foods = await _connection.Table<Foods>().ToListAsync();
+            var settings = await _connection.Table<Settings>().ToListAsync();
             Random random = new Random();
             foreach (var child in grid.Children)
             {
@@ -26,62 +27,83 @@ namespace SharoNue.Test
                 int dayId = int.Parse(item.ClassId[1].ToString());
                 if (mealID > 0 && dayId < 7)
                 {
-                    //var date = DateTime.Now.AddDays(daysFromToday);
-                    Meal meal = null;
-                    if (item.ClassId.Length > 2)
+                    //in the settings you have a bool that determin if you are allowed
+                    //to auto populate the meal of the day
+                    var allowed = settings.Where(x => x.IdDay == dayId)
+                                      .Where(x => x.MealID == mealID)
+                                      .Select(x => x.IsAutoPopulate).SingleOrDefault();
+                    if (allowed)
                     {
-                        var id = int.Parse(item.ClassId.Substring(2, item.ClassId.Length -2));
+                        Meal meal = null;
+                        if (item.ClassId.Length > 2)
+                        {
+                            var id = int.Parse(item.ClassId.Substring(2, item.ClassId.Length - 2));
 
-                        meal = await _connection.Table<Meal>().Where(m => m.MealId == id)
-                                                 .FirstOrDefaultAsync();
-                    }
-                    if (meal == null)
-                    {
-                        meal = new Meal
-                        {
-                            MealDay = dayId,
-                            MealType = mealID,
-                            MealDate = HelperMethods.WeekDays(dayId, DateTime.Now.AddDays(daysFromToday)),
-                        };
-                        int x = 0;
-                        if (meal != null)
-                        {
-                            x = await _connection.InsertAsync(meal);
+                            meal = await _connection.Table<Meal>().Where(m => m.MealId == id)
+                                                    .FirstOrDefaultAsync();
                         }
+                        //create a new meal if not exists in the DB
+                        if (meal == null)
+                        {
+                            meal = new Meal
+                            {
+                                MealDay = dayId,
+                                MealType = mealID,
+                                MealDate = HelperMethods.WeekDays(dayId, DateTime.Now.AddDays(daysFromToday)),
+                            };
+                            int x = 0;
+                            if (meal != null)
+                            {
+                                x = await _connection.InsertAsync(meal);
+                            }
+                        }
+                        await PopulateMeal(meal, foods, settings);
                     }
-
-                    var rnd = random.Next(1, foods.Count);
-                    var firstMeal = foods.SingleOrDefault(f => f.Id == rnd);
-
-                    List<MealLines> mealLinesList = new List<MealLines>();
-                    MealLines mealLines = new MealLines()
-                    {
-                        MealId = meal.MealId,
-                        MealTypeId = mealID,
-                        FoodDesc = firstMeal.FoodDescription
-                    };
-                    rnd = random.Next(1, foods.Count);
-                    var SecMeal = foods.SingleOrDefault(f => f.Id == rnd);
-                    mealLinesList.Add(mealLines);
-                    MealLines mealLines1 = new MealLines()
-                    {
-                        MealId = meal.MealId,
-                        MealTypeId = mealID,
-                        FoodDesc = SecMeal.FoodDescription
-                    };
-                    mealLinesList.Add(mealLines1);
-                    await _connection.InsertAllAsync(mealLinesList);
-
                 }
             }
         }
         public static async Task PopulateMeal(Meal meal, List<Foods> foods, List<Settings> settings)
         {
-            List<MealLines> mealLines= new List<MealLines>();
-            //breakfast
-            if (meal.MealType == (int)MealType.Breakfast)
+            SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            List<MealLines> mealLinesList = new List<MealLines>();
+            if(meal.MealType == (int)MealType.Breakfast || 
+                meal.MealType == (int)MealType.Lunch || 
+                meal.MealType == (int)MealType.Dinner)
             {
+                Random random = new Random();
+                var foodsByMeals = foods.Where(x => x.MealTypeList.Contains(meal.MealType.ToString())).ToList();
+                
+                var foodCarbList = foodsByMeals.Where(f => f.FoodType == (int)foodTypesEnum.Carbs).ToList();
+                var rnd = random.Next(1, foodCarbList.Count + 1);
+                var firstMeal = foodCarbList[rnd-1];
+                mealLinesList.Add(new MealLines
+                {
+                    MealId = meal.MealId,
+                    MealTypeId = meal.MealType,
+                    FoodDesc = firstMeal.FoodDescription
+                });
 
+                var foodProteinList = foodsByMeals.Where(f => f.FoodType == (int)foodTypesEnum.Protein).ToList();
+                rnd = random.Next(1, foodProteinList.Count + 1);
+                var secMeal = foodProteinList[rnd-1];
+                mealLinesList.Add(new MealLines
+                {
+                    MealId = meal.MealId,
+                    MealTypeId = meal.MealType,
+                    FoodDesc = secMeal.FoodDescription
+                });
+
+                var foodOthersList = foodsByMeals.Where(f => f.FoodType != (int)foodTypesEnum.Carbs && f.FoodType != (int)foodTypesEnum.Protein).ToList();
+                rnd = random.Next(1, foodOthersList.Count + 1);
+                var thirdMeal = foodOthersList[rnd-1];
+                mealLinesList.Add(new MealLines
+                {
+                    MealId = meal.MealId,
+                    MealTypeId = meal.MealType,
+                    FoodDesc = thirdMeal.FoodDescription
+                });
+
+                await _connection.InsertAllAsync(mealLinesList);
             }
         }
         public static async Task PopulateFoods()
@@ -121,7 +143,7 @@ namespace SharoNue.Test
             foodTypes.Add(new FoodTypes
             {
                 FoodTypeDescription = "Fruit",
-                Id = 5
+                Id = 7
             });
 
             await _connection.InsertAllAsync(foodTypes);
@@ -129,20 +151,23 @@ namespace SharoNue.Test
             foods.Add(new Foods
             {
                 FoodDescription = "Eggs",
-                FoodType = 3,
-                Id  = (int)foodTypesEnum.Carbs
+                FoodType = (int)foodTypesEnum.Protein,
+                Id = 1,
+                MealTypeList = ""
             });
             foods.Add(new Foods
             {
                 FoodDescription = "Salad",
-                FoodType = 2,
-                Id = (int)foodTypesEnum.Salad
+                FoodType = (int)foodTypesEnum.Salad,
+                Id = 2,
+                MealTypeList = ""
             });
             foods.Add(new Foods
             {
                 FoodDescription = "Bread",
-                FoodType = 1,
-                Id = (int)foodTypesEnum.Carbs
+                FoodType = (int)foodTypesEnum.Carbs,
+                Id = 3,
+                MealTypeList = ""
             });
             await _connection.InsertAllAsync(foods);
         }

@@ -1,4 +1,5 @@
-﻿using SharoNue.Persistance;
+﻿using SharoNue.Helper;
+using SharoNue.Persistance;
 using SharoNue.View;
 using SQLite;
 using System;
@@ -35,7 +36,6 @@ namespace SharoNue
             if (foodTypesList != null)
             {
                 SelectBox.ItemsSource = foodTypesList;
-                //SelectBox.SelectedItem = foodTypesList[0];
             }
         }
 
@@ -62,7 +62,7 @@ namespace SharoNue
                     var newFood = new Foods()
                     {
                         FoodDescription = FoodDesc.Text,
-                        FoodType = SelectBox.SelectedIndex,
+                        FoodType = SelectBox.SelectedIndex+1,
                         MealTypeList = CreateMealTypeList(), 
                     };
                     var x = await _connection.InsertAsync(newFood);
@@ -106,7 +106,7 @@ namespace SharoNue
             Btn.Clicked -= Add_Button_Clicked;
             Btn.Clicked += Save_Button_Clicked;
             FoodDesc.Text = foods.FoodDescription;
-            SelectBox.SelectedIndex = foods.FoodType;
+            SelectBox.SelectedIndex = foods.FoodType-1;
             if (foods.MealTypeList != null)
             {
                 if (foods.MealTypeList.Contains("1"))
@@ -123,12 +123,13 @@ namespace SharoNue
         private async void Save_Button_Clicked(object sender, EventArgs e)
         {
             _food.FoodDescription = FoodDesc.Text;
-            _food.FoodType = SelectBox.SelectedIndex;
+            _food.FoodType = SelectBox.SelectedIndex+1;
             _food.MealTypeList = CreateMealTypeList(); 
             if(!await CheckIfFoodExist(_food.FoodDescription))
             {
                 await _connection.UpdateAsync(_food);
                 await DisplayAlert("Save", "Food Saved", "OK");
+                await Navigation.PopAsync();
             }
             else
             {
