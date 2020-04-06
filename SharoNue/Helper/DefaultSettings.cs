@@ -22,8 +22,8 @@ namespace SharoNue.Helper
                         IdDay = i,
                         IsAutoPopulate = true,
                         MealID = j,
-                        ListOfConstantFoods="",
-                        ListOfFoodTypes=""
+                        ListOfConstantFoods="food1,food2",
+                        ListOfFoodTypes="type1,type2"
                     });
                 };
             };

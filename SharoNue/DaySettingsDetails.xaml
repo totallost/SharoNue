@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="SharoNue.DaySettingsDetails">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="PageTitle"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <Picker SelectedIndexChanged="MealTypePicker_SelectedIndexChanged"  x:Name="MealTypePicker">
+                <Picker.Items>
+                    <x:String>BreakFast</x:String>
+                    <x:String>Snack</x:String>
+                    <x:String>Lunch</x:String>
+                    <x:String>Dinner</x:String>
+                </Picker.Items>
+            </Picker>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Is Auto Filled?" HorizontalOptions="Start"/>
+                <Switch x:Name="IsAutoFilled" 
+                        IsToggled="{Binding IsAutoFilledOn, Mode=TwoWay}" 
+                        Toggled="IsAutoFilledOn_Toggled"
+                        HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+            <StackLayout x:Name="ConstantFoodsStack">
+                <Label Text="Constant Foods"/>
+                <Entry x:Name="ConstantFoodEntry" Placeholder="Enter new constant food"/>
+                <Button Text="Add" Clicked="AddConstantFood_Clicked"/>
+                <ListView x:Name="ConstantFoodList" ItemsSource="{Binding _ConstantFoodList}">
+                    <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                        <Label Text="{Binding .}" 
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="Start"/>
+                                        <Button Text="Delete" 
+                                            HorizontalOptions="EndAndExpand" 
+                                            Clicked="DeleteConstantFood_Button_Clicked"
+                                            CommandParameter="{Binding .}"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+            </StackLayout>
+            <StackLayout x:Name="FoodTypeStack">
+                <Label Text="Food types"/>
+                <Picker x:Name="SelectBox" 
+                        SelectedIndex="{Binding Id}" 
+                        ItemDisplayBinding="{Binding FoodTypeDescription}"
+                        Title="Food Types">
+                </Picker>
+                <Button Text="Add" Clicked="AddFoodTypes_Clicked"/>
+                <ListView x:Name="FoodTypeList" ItemsSource="{Binding _FoodTypeList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                    <Label Text="{Binding .}" 
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="Start"/>
+                                    <Button Text="Delete" 
+                                            HorizontalOptions="EndAndExpand" 
+                                            Clicked="DeleteFoodType_Button_Clicked"
+                                            CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Button Text="Save Changes" Clicked="SaveButton_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

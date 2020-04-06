@@ -74,5 +74,12 @@ namespace SharoNue
                 FoodsCollection.Remove(item);
             }
         }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var searchString = e.NewTextValue.ToLower();
+            listView.ItemsSource = FoodsCollection.Where(x => x.FoodDescription.ToLower().StartsWith(searchString))
+                                                  .ToList();
+        }
     }
 }

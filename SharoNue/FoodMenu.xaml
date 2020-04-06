@@ -10,7 +10,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <SearchBar/>
+            <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
             <ListView x:Name="listView" ItemsSource="{Binding FoodsCollection}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

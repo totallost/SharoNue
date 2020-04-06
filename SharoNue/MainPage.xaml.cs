@@ -44,5 +44,10 @@ namespace SharoNue
         {
             await Navigation.PushAsync(new FoodMenu());
         }
+
+        async private void Button_Clicked_2(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DaysSettings());
+        }
     }
 }

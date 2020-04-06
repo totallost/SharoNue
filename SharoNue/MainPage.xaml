@@ -15,8 +15,9 @@
         <Button Text="Courses"
                 HorizontalOptions="Center"
                 Clicked="Button_Clicked_1"/>
-        <Button Text="Future Menu"
-                HorizontalOptions="Center"/>
+        <Button Text="Settings"
+                HorizontalOptions="Center"
+                Clicked="Button_Clicked_2"/>
         <Button Text="Next Week Menu"
                 HorizontalOptions="Center"/>
     </StackLayout>
