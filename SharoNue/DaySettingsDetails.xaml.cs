@@ -72,11 +72,13 @@ namespace SharoNue
             IsAutoFilled.IsToggled = IsAutoFilledOn;
             var tempConstantFoodList = _settings.Where(x => x.MealID == mealType)
                                     .Select(x => x.ListOfConstantFoods)
-                                    .SingleOrDefault().Split(',').ToList();
+                                    .SingleOrDefault().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                    .ToList();
             _ConstantFoodList = new ObservableCollection<string>(tempConstantFoodList);
             var tempFoodTypesList = _settings.Where(x => x.MealID == mealType)
                                     .Select(x => x.ListOfFoodTypes)
-                                    .SingleOrDefault().Split(',').ToList();
+                                    .SingleOrDefault().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                    .ToList();
             _FoodTypeList = new ObservableCollection<string>(tempFoodTypesList);
             FoodTypeList.ItemsSource = _FoodTypeList;
             ConstantFoodList.ItemsSource = _ConstantFoodList;
