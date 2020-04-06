@@ -4,6 +4,8 @@ using SharoNue.View;
 using SQLite;
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SharoNue
@@ -30,6 +32,7 @@ namespace SharoNue
             await _connection.CreateTableAsync<FoodTypes>();
             await _connection.CreateTableAsync<test>();
             await _connection.CreateTableAsync<Settings>();
+            await CreateDefaultData();
 
             base.OnAppearing();
         }
@@ -48,6 +51,18 @@ namespace SharoNue
         async private void Button_Clicked_2(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new DaysSettings());
+        }
+
+        async private Task CreateDefaultData()
+        {
+            DefaultSettings defaultSettings = new DefaultSettings();
+            var settings = await _connection.Table<Settings>().ToListAsync();
+            if (settings.Count() == 0)
+                await defaultSettings.SetDefaultSettings();
+            var foodTypes = await _connection.Table<FoodTypes>().ToListAsync();
+            if (foodTypes.Count == 0)
+                await defaultSettings.PopulateFoods();
+
         }
     }
 }

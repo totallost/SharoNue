@@ -27,9 +27,6 @@ namespace SharoNue
         }
         protected override async void OnAppearing()
         {
-            var x = await _connection.Table<FoodTypes>().ToListAsync();
-            if(x.Count ==0)
-                await TestMethods.PopulateFoods();
             await PopulateStackLayout();
         }
 
