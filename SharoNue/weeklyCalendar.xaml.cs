@@ -118,6 +118,7 @@ namespace SharoNue
         {
             var autoFill = new AutoFill();
             await autoFill.populateDatabase(_grid, MainPage.DaysFromToday);
+            await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
         }
     }
 }
