@@ -116,7 +116,8 @@ namespace SharoNue
 
         private async void AutoPopulate_Clicked(object sender, EventArgs e)
         {
-            await TestMethods.populateDatabase(_grid, MainPage.DaysFromToday);
+            var autoFill = new AutoFill();
+            await autoFill.populateDatabase(_grid, MainPage.DaysFromToday);
         }
     }
 }

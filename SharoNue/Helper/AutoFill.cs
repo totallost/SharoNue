@@ -1,5 +1,4 @@
-﻿using SharoNue.Helper;
-using SharoNue.Persistance;
+﻿using SharoNue.Persistance;
 using SharoNue.View;
 using SQLite;
 using System;
@@ -9,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace SharoNue.Test
+namespace SharoNue.Helper
 {
-    class TestMethods
+    class AutoFill
     {
-        public static async Task populateDatabase(Grid grid, int daysFromToday)
+        private SQLiteAsyncConnection _connection;
+        public async Task populateDatabase(Grid grid, int daysFromToday)
         {
-            SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             List<Meal> meals = new List<Meal>();
             var foods = await _connection.Table<Foods>().ToListAsync();
             var settings = await _connection.Table<Settings>().ToListAsync();
@@ -62,9 +62,8 @@ namespace SharoNue.Test
             }
         }
 
-        public static async Task PopulateMeal(Meal meal, List<Foods> foods, List<Settings> settings)
+        public async Task PopulateMeal(Meal meal, List<Foods> foods, List<Settings> settings)
         {
-            SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             List<MealLines> mealLinesList = new List<MealLines>();
             var currentSetting = settings.Where(x => x.IdDay == meal.MealDay)
                                          .Where(x => x.MealID == meal.MealType)
@@ -74,9 +73,9 @@ namespace SharoNue.Test
             {
                 listOfFoods = currentSetting.ListOfFoodTypes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                                                             .ToList();
-                if(listOfFoods.Count>0)
+                if (listOfFoods.Count > 0)
                 {
-                    foreach(var foodType in listOfFoods)
+                    foreach (var foodType in listOfFoods)
                     {
                         var foodTypeDB = await _connection.Table<FoodTypes>()
                                                            .Where(x => x.FoodTypeDescription == foodType)
@@ -88,7 +87,7 @@ namespace SharoNue.Test
                                                                  .Where(x => x.FoodType == foodTypeDB.Id)
                                                                  .Where(x => x.MealTypeList.Contains(mealType))
                                                                  .ToListAsync();
-                            if(listOfRelevantFoods.Count!=0)
+                            if (listOfRelevantFoods.Count != 0)
                             {
                                 Random random = new Random();
                                 var index = random.Next(listOfRelevantFoods.Count);
@@ -110,7 +109,7 @@ namespace SharoNue.Test
                                                                 .ToList();
                 if (listOfFoods.Count > 0)
                 {
-                    foreach(var food in listOfFoods)
+                    foreach (var food in listOfFoods)
                     {
                         mealLinesList.Add(new MealLines
                         {
@@ -121,63 +120,8 @@ namespace SharoNue.Test
                     }
                 }
             }
-            if (mealLinesList.Count>0)
+            if (mealLinesList.Count > 0)
                 await _connection.InsertAllAsync(mealLinesList);
         }
-        public static async Task PopulateMealOLD(Meal meal, List<Foods> foods, List<Settings> settings)
-        {
-            SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            List<MealLines> mealLinesList = new List<MealLines>();
-            if(meal.MealType == (int)MealType.Breakfast || 
-                meal.MealType == (int)MealType.Lunch || 
-                meal.MealType == (int)MealType.Dinner)
-            {
-                Random random = new Random();
-                var foodsByMeals = foods.Where(x => x.MealTypeList.Contains(meal.MealType.ToString())).ToList();
-                
-                var foodCarbList = foodsByMeals.Where(f => f.FoodType == (int)foodTypesEnum.Carbs).ToList();
-                var rnd = random.Next(1, foodCarbList.Count + 1);
-                var firstMeal = foodCarbList[rnd-1];
-                mealLinesList.Add(new MealLines
-                {
-                    MealId = meal.MealId,
-                    MealTypeId = meal.MealType,
-                    FoodDesc = firstMeal.FoodDescription
-                });
-
-                var foodProteinList = foodsByMeals.Where(f => f.FoodType == (int)foodTypesEnum.Protein).ToList();
-                rnd = random.Next(1, foodProteinList.Count + 1);
-                var secMeal = foodProteinList[rnd-1];
-                mealLinesList.Add(new MealLines
-                {
-                    MealId = meal.MealId,
-                    MealTypeId = meal.MealType,
-                    FoodDesc = secMeal.FoodDescription
-                });
-
-                var foodOthersList = foodsByMeals.Where(f => f.FoodType != (int)foodTypesEnum.Carbs && f.FoodType != (int)foodTypesEnum.Protein).ToList();
-                rnd = random.Next(1, foodOthersList.Count + 1);
-                var thirdMeal = foodOthersList[rnd-1];
-                mealLinesList.Add(new MealLines
-                {
-                    MealId = meal.MealId,
-                    MealTypeId = meal.MealType,
-                    FoodDesc = thirdMeal.FoodDescription
-                });
-
-                await _connection.InsertAllAsync(mealLinesList);
-            }
-        }
-        public enum foodTypesEnum
-        {
-            Carbs = 1,
-            Vegetables,
-            Protein,
-            Soup,
-            Salad,
-            Desert,
-            Fruit
-        }
-
     }
 }

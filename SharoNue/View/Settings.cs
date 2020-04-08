@@ -19,5 +19,7 @@ namespace SharoNue.View
         public string ListOfConstantFoods { get; set; }
         //List of food types that are going to be generated automatically per meal 
         public string ListOfFoodTypes { get; set; }
+        //will the day be filled at all 
+        public bool IsActive { get; set; }
     }
 }
