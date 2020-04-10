@@ -13,6 +13,7 @@ namespace SharoNue.Helper
     class AutoFill
     {
         private SQLiteAsyncConnection _connection;
+        //this next method creates the Meal
         public async Task populateDatabase(Grid grid, int daysFromToday)
         {
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();

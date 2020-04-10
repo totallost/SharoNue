@@ -58,6 +58,7 @@ namespace SharoNue
             await GetSettings();
             await PopulateSelectBox();
             MealTypePicker.SelectedIndex = 0;
+            PopulateSettings(0);
         }
         private async Task GetSettings()
         {
@@ -82,6 +83,9 @@ namespace SharoNue
             _FoodTypeList = new ObservableCollection<string>(tempFoodTypesList);
             FoodTypeList.ItemsSource = _FoodTypeList;
             ConstantFoodList.ItemsSource = _ConstantFoodList;
+
+            ConstantFoodsStack.IsVisible = !IsAutoFilledOn;
+            FoodTypeStack.IsVisible = IsAutoFilledOn;
 
         }
 

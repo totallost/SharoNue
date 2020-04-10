@@ -52,7 +52,7 @@ namespace SharoNue
             switch (action)
             {
                 case "Add":
-                    string result = await DisplayPromptAsync("Add", "Add new meal", "OK", "Cancel",null,25,Keyboard.Default);
+                    string result = await DisplayPromptAsync("Add", "Add new meal", "OK", "Cancel", "Add New Item", 100, Keyboard.Default,"");
                     if (result !=null)
                     {
                         mealLines.Add(new MealLines
@@ -100,11 +100,13 @@ namespace SharoNue
                 var z = await _connection.InsertAllAsync(mealLines);
             }
         }
+
         private async void Edit_Button_Clicked(object sender, EventArgs e)
         {
             var itemsender = (Xamarin.Forms.Button)sender;
             MealLines item = (MealLines)itemsender?.CommandParameter;
-            string result = await DisplayPromptAsync("Edit "+item.FoodDesc, "Edit your meal","OK","Cancel", item.FoodDesc,25,Keyboard.Default);
+            //string result = await DisplayPromptAsync("Edit "+item.FoodDesc, "Edit your meal","OK","Cancel", item.FoodDesc,25,Keyboard.Default);
+            string result = await DisplayPromptAsync("Edit "+item.FoodDesc, "Edit your meal", "OK", "Cancel", "", 100,Keyboard.Default, item.FoodDesc);
             if (result != null)
             {
                 mealLines.Where(x => x.Id == item.Id).FirstOrDefault().FoodDesc= result;
