@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SharoNue.weeklyCalendar">
+             x:Class="SharoNue.weeklyCalendar"
+             Visual="Material">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Previus" Clicked="ToolbarItem_Clicked"/>
         <ToolbarItem Text="Next" Clicked="ToolbarItem_Clicked"/>

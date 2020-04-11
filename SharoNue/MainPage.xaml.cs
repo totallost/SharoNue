@@ -21,6 +21,7 @@ namespace SharoNue
         {
             InitializeComponent();
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            
         }
 
         protected override async void OnAppearing()

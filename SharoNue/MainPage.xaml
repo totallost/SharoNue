@@ -4,22 +4,42 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SharoNue.MainPage">
-
+             x:Class="SharoNue.MainPage"
+             Visual="Material"
+             BackgroundColor="#ffc4ad"
+             Title="SharonNu">
     <StackLayout Orientation="Vertical"
-                 HorizontalOptions="Center"
-                 VerticalOptions="Center">
-        <Button Text="Current Menu"
-                HorizontalOptions="Center"
-                Clicked="Button_Clicked"/>
-        <Button Text="Courses"
-                HorizontalOptions="Center"
-                Clicked="Button_Clicked_1"/>
-        <Button Text="Settings"
-                HorizontalOptions="Center"
-                Clicked="Button_Clicked_2"/>
-        <Button Text="Next Week Menu"
-                HorizontalOptions="Center"/>
+                 VerticalOptions="FillAndExpand">
+        <Button Text="&#xf2e7; Plan Menu"
+                FontFamily="{StaticResource FontAwesomeSolid}"
+                Clicked="Button_Clicked" 
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                BackgroundColor="Transparent"
+                BorderColor="White"
+                TextColor="Black"
+                BorderWidth="10"
+                FontSize="Large"/>
+        <Button Text="&#xf818; Food List"
+                FontFamily="{StaticResource FontAwesomeSolid}"
+                Clicked="Button_Clicked_1"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                BackgroundColor="Transparent"
+                BorderColor="White"
+                TextColor="Black"
+                BorderWidth="10"
+                FontSize="Large"/>
+        <Button Text="&#xf4fe; Settings"
+                FontFamily="{StaticResource FontAwesomeSolid}"
+                Clicked="Button_Clicked_2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                BackgroundColor="Transparent"
+                BorderColor="White"
+                TextColor="Black"
+                BorderWidth="10"
+                FontSize="Large"/>
     </StackLayout>
 
 </ContentPage>

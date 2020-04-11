@@ -10,7 +10,11 @@ namespace SharoNue
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage())
+            {
+                BarBackgroundColor = Color.FromHex("#a1b1b3"),
+                BarTextColor = Color.White
+            };
         }
 
         protected override void OnStart()

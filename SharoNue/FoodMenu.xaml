@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SharoNue.FoodMenu">
+             x:Class="SharoNue.FoodMenu"
+             Visual="Material">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="More" Clicked="More_Clicked"/>
     </ContentPage.ToolbarItems>
@@ -22,8 +23,18 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding FoodDescription}" FontSize="Medium" TextColor="Black" Grid.Column="0"/>
-                                <Button Text="Edit" Grid.Column="1" Clicked="Edit_Button_Clicked" CommandParameter="{Binding .}"/>
-                                <Button Text="Delete" Grid.Column="2" Clicked="Delete_Button_Clicked" CommandParameter="{Binding .}"/>
+                                <!--EDIT button-->
+                                <Button Text="&#xf304;" 
+                                        FontFamily="{StaticResource FontAwesomeSolid}" 
+                                        Grid.Column="1" 
+                                        Clicked="Edit_Button_Clicked" 
+                                        CommandParameter="{Binding .}"/>
+                                <!--delete button-->
+                                <Button Text="&#xf1f8;"
+                                        FontFamily="{StaticResource FontAwesomeSolid}" 
+                                        Grid.Column="2" 
+                                        Clicked="Delete_Button_Clicked" 
+                                        CommandParameter="{Binding .}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

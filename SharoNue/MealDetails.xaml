@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SharoNue.MealDetails">
+             x:Class="SharoNue.MealDetails"
+             Visual="Material">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="More" Clicked="ToolbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
@@ -22,8 +23,18 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" IsChecked="{Binding IsMet}" />
                             <Label Text="{Binding FoodDesc}" FontSize="Medium" TextColor="Black" Grid.Column="1"/>
-                            <Button Text="Edit" Grid.Column="2" Clicked="Edit_Button_Clicked" CommandParameter="{Binding .}"/>
-                            <Button Text="Delete" Grid.Column="3" Clicked="Delete_Button_Clicked" CommandParameter="{Binding .}"/>
+                            <!--edit button-->
+                            <Button Text="&#xf304;" 
+                                    FontFamily="{StaticResource FontAwesomeSolid}" 
+                                    Grid.Column="2" 
+                                    Clicked="Edit_Button_Clicked" 
+                                    CommandParameter="{Binding .}"/>
+                            <!--delete button-->
+                            <Button Text="&#xf1f8;"
+                                    FontFamily="{StaticResource FontAwesomeSolid}" 
+                                    Grid.Column="3" 
+                                    Clicked="Delete_Button_Clicked" 
+                                    CommandParameter="{Binding .}"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

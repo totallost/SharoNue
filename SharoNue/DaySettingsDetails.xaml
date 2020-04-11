@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="SharoNue.DaySettingsDetails">
+             x:Class="SharoNue.DaySettingsDetails"
+             Visual="Material">
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="PageTitle"/>
     </ContentPage.ToolbarItems>
@@ -28,7 +29,8 @@
             <StackLayout x:Name="ConstantFoodsStack">
                 <Label Text="Constant Foods"/>
                 <Entry x:Name="ConstantFoodEntry" Placeholder="Enter new constant food"/>
-                <Button Text="Add" Clicked="AddConstantFood_Clicked"/>
+                <!--add button-->
+                <Button Text="&#xf067;" FontFamily="{StaticResource FontAwesomeSolid}" Clicked="AddConstantFood_Clicked"/>
                 <ListView x:Name="ConstantFoodList" ItemsSource="{Binding _ConstantFoodList}">
                     <ListView.ItemTemplate>
                             <DataTemplate>
@@ -37,7 +39,12 @@
                                         <Label Text="{Binding .}" 
                                            VerticalOptions="Center" 
                                            HorizontalOptions="Start"/>
-                                        <Button Text="Delete" 
+                                    <!--delete button-->
+                                    <Button Text="&#xf1f8;"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            TextColor="White"
+                                            BackgroundColor="Black"
+                                            FontSize="Large"
                                             HorizontalOptions="EndAndExpand" 
                                             Clicked="DeleteConstantFood_Button_Clicked"
                                             CommandParameter="{Binding .}"/>
@@ -54,7 +61,8 @@
                         ItemDisplayBinding="{Binding FoodTypeDescription}"
                         Title="Food Types">
                 </Picker>
-                <Button Text="Add" Clicked="AddFoodTypes_Clicked"/>
+                <!--add button-->
+                <Button Text="&#xf067;" FontFamily="{StaticResource FontAwesomeSolid}" Clicked="AddFoodTypes_Clicked"/>
                 <ListView x:Name="FoodTypeList" ItemsSource="{Binding _FoodTypeList}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -63,7 +71,9 @@
                                     <Label Text="{Binding .}" 
                                            VerticalOptions="Center" 
                                            HorizontalOptions="Start"/>
-                                    <Button Text="Delete" 
+                                    <!--delete button-->
+                                    <Button Text="&#xf1f8;"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
                                             HorizontalOptions="EndAndExpand" 
                                             Clicked="DeleteFoodType_Button_Clicked"
                                             CommandParameter="{Binding .}"/>
