@@ -7,8 +7,8 @@
              x:Class="SharoNue.weeklyCalendar"
              Visual="Material">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Previus" Clicked="ToolbarItem_Clicked"/>
-        <ToolbarItem Text="Next" Clicked="ToolbarItem_Clicked"/>
-        <ToolbarItem Text="Fill" Clicked="AutoPopulate_Clicked"/>
+        <ToolbarItem Text="Previous" IconImageSource="arrowLeft.png" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem Text="Next" IconImageSource="arrowRight.png" Clicked="ToolbarItem_Clicked"/>
+        <ToolbarItem IconImageSource="ellipsisV.png" Clicked="More_Clicked"/>
     </ContentPage.ToolbarItems>
 </ContentPage>

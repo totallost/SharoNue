@@ -18,6 +18,7 @@ namespace SharoNue.Helper
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.25, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.75, GridUnitType.Star) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1.5, GridUnitType.Star) });
+            
 
             for (var i = 0; i < 5; i++)
             {
@@ -28,6 +29,7 @@ namespace SharoNue.Helper
                         Label label = new Label();
                         label.Text = HelperMethods.WeekDays(j, dt).ToString("ddd").ToUpper() + "\n" + HelperMethods.WeekDays(j, dt).ToString("dd/MM/yy");
                         label.ClassId = i.ToString() + j.ToString();
+                        //label.BackgroundColor = Color.FromHex("ffafd3");
                         grid.Children.Add(label, j, i);
                     }
                     else
@@ -42,25 +44,29 @@ namespace SharoNue.Helper
                                     grid.Children.Add(new Label
                                     {
                                         Text = "Breakfast",
-                                        ClassId = i.ToString() + j.ToString()
+                                        ClassId = i.ToString() + j.ToString(),
+                                        BackgroundColor = Color.FromHex("ffc4ad")
                                     }, j, i);
                                 if (i == 2)
                                     grid.Children.Add(new Label
                                     {
                                         Text = "Snack",
-                                        ClassId = i.ToString() + j.ToString()
+                                        ClassId = i.ToString() + j.ToString(),
+                                        BackgroundColor = Color.FromHex("adf5ff")
                                     }, j, i);
                                 if (i == 3)
                                     grid.Children.Add(new Label
                                     {
                                         Text = "Lunch",
-                                        ClassId = i.ToString() + j.ToString()
+                                        ClassId = i.ToString() + j.ToString(),
+                                        BackgroundColor = Color.FromHex("dbadff")
                                     }, j, i);
                                 if (i == 4)
                                     grid.Children.Add(new Label
                                     {
                                         Text = "Dinner",
-                                        ClassId = i.ToString() + j.ToString()
+                                        ClassId = i.ToString() + j.ToString(),
+                                        BackgroundColor = Color.FromHex("ffedad")
                                     }, j, i);
                             }
                             else
@@ -68,7 +74,22 @@ namespace SharoNue.Helper
                                 Label contentOfMeals = new Label();
                                 contentOfMeals.ClassId = i.ToString() + j.ToString();
                                 contentOfMeals.GestureRecognizers.Add(tgr);
-                                contentOfMeals.BackgroundColor = Color.AliceBlue;
+                                //contentOfMeals.BackgroundColor = Color.AliceBlue;
+                                switch (i)
+                                {
+                                    case 1:
+                                        contentOfMeals.BackgroundColor = Color.FromHex("ffc4ad");
+                                        break;
+                                    case 2:
+                                        contentOfMeals.BackgroundColor = Color.FromHex("adf5ff");
+                                        break;
+                                    case 3:
+                                        contentOfMeals.BackgroundColor = Color.FromHex("dbadff");
+                                        break;
+                                    case 4:
+                                        contentOfMeals.BackgroundColor = Color.FromHex("ffedad");
+                                        break;
+                                }
 
                                 grid.Children.Add(contentOfMeals, j, i);
                             }

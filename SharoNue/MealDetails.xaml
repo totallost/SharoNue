@@ -7,10 +7,13 @@
              x:Class="SharoNue.MealDetails"
              Visual="Material">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="More" Clicked="ToolbarItem_Clicked"/>
+        <!--More button -->
+        <ToolbarItem Text="More"
+                     IconImageSource="ellipsisV.png"
+                     Clicked="ToolbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ListView x:Name="listView" ItemsSource="{Binding listView}">
+        <ListView x:Name="listView" ItemsSource="{Binding listView}" BackgroundColor="#ffc4ad">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -25,16 +28,22 @@
                             <Label Text="{Binding FoodDesc}" FontSize="Medium" TextColor="Black" Grid.Column="1"/>
                             <!--edit button-->
                             <Button Text="&#xf304;" 
+                                    TextColor="Black"
                                     FontFamily="{StaticResource FontAwesomeSolid}" 
                                     Grid.Column="2" 
                                     Clicked="Edit_Button_Clicked" 
-                                    CommandParameter="{Binding .}"/>
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#a1b1b3"
+                                    BorderRadius ="20"/>
                             <!--delete button-->
                             <Button Text="&#xf1f8;"
+                                    TextColor="Black"
                                     FontFamily="{StaticResource FontAwesomeSolid}" 
                                     Grid.Column="3" 
                                     Clicked="Delete_Button_Clicked" 
-                                    CommandParameter="{Binding .}"/>
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#d46260"
+                                    BorderRadius ="20"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

@@ -7,10 +7,15 @@
              x:Class="SharoNue.FoodMenu"
              Visual="Material">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="More" Clicked="More_Clicked"/>
+        <!--More button-->
+        <ToolbarItem Text="More"
+                     IconImageSource="ellipsisV.png"
+                     Order="Primary"
+                     Priority="0"
+                     Clicked="More_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout  BackgroundColor="#ffc4ad" Padding="10">
             <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
             <ListView x:Name="listView" ItemsSource="{Binding FoodsCollection}">
                 <ListView.ItemTemplate>
@@ -28,13 +33,17 @@
                                         FontFamily="{StaticResource FontAwesomeSolid}" 
                                         Grid.Column="1" 
                                         Clicked="Edit_Button_Clicked" 
-                                        CommandParameter="{Binding .}"/>
+                                        CommandParameter="{Binding .}"
+                                        BorderRadius ="20"
+                                        BackgroundColor="#a1b1b3"/>
                                 <!--delete button-->
                                 <Button Text="&#xf1f8;"
                                         FontFamily="{StaticResource FontAwesomeSolid}" 
                                         Grid.Column="2" 
                                         Clicked="Delete_Button_Clicked" 
-                                        CommandParameter="{Binding .}"/>
+                                        CommandParameter="{Binding .}"
+                                        BorderRadius="20"
+                                        BackgroundColor="#d46260"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

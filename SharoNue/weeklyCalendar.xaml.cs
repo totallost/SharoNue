@@ -113,12 +113,19 @@ namespace SharoNue
             }
                 
         }
-
-        private async void AutoPopulate_Clicked(object sender, EventArgs e)
+        private async void More_Clicked(object sender, EventArgs e)
         {
-            var autoFill = new AutoFill();
-            await autoFill.populateDatabase(_grid, MainPage.DaysFromToday);
-            await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
+            string action = await DisplayActionSheet("What do you want to do?", "Cancel", null, "Auto Fill", "Sent to Email");
+            switch (action)
+            {
+                case "Auto Fill":
+                    var autoFill = new AutoFill();
+                    await autoFill.populateDatabase(_grid, MainPage.DaysFromToday);
+                    await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
+                    break;
+                case "Sent to Email":
+                    break;
+            }
         }
     }
 }

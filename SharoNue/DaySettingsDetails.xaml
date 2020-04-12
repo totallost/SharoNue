@@ -10,7 +10,7 @@
         <ToolbarItem x:Name="PageTitle"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout BackgroundColor="#ffc4ad" Padding="10">
             <Picker SelectedIndexChanged="MealTypePicker_SelectedIndexChanged"  x:Name="MealTypePicker">
                 <Picker.Items>
                     <x:String>BreakFast</x:String>
@@ -24,30 +24,42 @@
                 <Switch x:Name="IsAutoFilled" 
                         IsToggled="{Binding IsAutoFilledOn, Mode=TwoWay}" 
                         Toggled="IsAutoFilledOn_Toggled"
-                        HorizontalOptions="EndAndExpand"/>
+                        HorizontalOptions="EndAndExpand"
+                        OnColor="#a1b1b3"/>
             </StackLayout>
             <StackLayout x:Name="ConstantFoodsStack">
                 <Label Text="Constant Foods"/>
-                <Entry x:Name="ConstantFoodEntry" Placeholder="Enter new constant food"/>
-                <!--add button-->
-                <Button Text="&#xf067;" FontFamily="{StaticResource FontAwesomeSolid}" Clicked="AddConstantFood_Clicked"/>
+                <StackLayout Orientation="Horizontal">
+                    <Entry x:Name="ConstantFoodEntry" 
+                           Placeholder="Enter new constant food"
+                           HorizontalOptions="FillAndExpand"/>
+                    <!--add button-->
+                    <Button Text="&#xf067;" 
+                            FontFamily="{StaticResource FontAwesomeSolid}" 
+                            FontSize="Large"
+                            Clicked="AddConstantFood_Clicked"
+                            HorizontalOptions="End"
+                            BackgroundColor="#a1b1b3"
+                            BorderRadius = "20" />
+                </StackLayout>
                 <ListView x:Name="ConstantFoodList" ItemsSource="{Binding _ConstantFoodList}">
                     <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                                         <Label Text="{Binding .}" 
-                                           VerticalOptions="Center" 
-                                           HorizontalOptions="Start"/>
-                                    <!--delete button-->
-                                    <Button Text="&#xf1f8;"
-                                            FontFamily="{StaticResource FontAwesomeSolid}"
-                                            TextColor="White"
-                                            BackgroundColor="Black"
-                                            FontSize="Large"
-                                            HorizontalOptions="EndAndExpand" 
-                                            Clicked="DeleteConstantFood_Button_Clicked"
-                                            CommandParameter="{Binding .}"/>
+                                               VerticalOptions="Center" 
+                                               HorizontalOptions="Start"/>
+                                        <!--delete button-->
+                                        <Button Text="&#xf1f8;"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                TextColor="White"
+                                                BackgroundColor="#d46260"
+                                                FontSize="Large"
+                                                HorizontalOptions="EndAndExpand" 
+                                                Clicked="DeleteConstantFood_Button_Clicked"
+                                                CommandParameter="{Binding .}"
+                                                BorderRadius ="20"/>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
@@ -56,13 +68,22 @@
             </StackLayout>
             <StackLayout x:Name="FoodTypeStack">
                 <Label Text="Food types"/>
-                <Picker x:Name="SelectBox" 
-                        SelectedIndex="{Binding Id}" 
-                        ItemDisplayBinding="{Binding FoodTypeDescription}"
-                        Title="Food Types">
-                </Picker>
-                <!--add button-->
-                <Button Text="&#xf067;" FontFamily="{StaticResource FontAwesomeSolid}" Clicked="AddFoodTypes_Clicked"/>
+                <StackLayout Orientation="Horizontal">
+                    <Picker x:Name="SelectBox" 
+                            SelectedIndex="{Binding Id}" 
+                            ItemDisplayBinding="{Binding FoodTypeDescription}"
+                            Title="Food Types"
+                            HorizontalOptions="FillAndExpand">
+                    </Picker>
+                    <!--add button-->
+                    <Button Text="&#xf067;" 
+                            FontFamily="{StaticResource FontAwesomeSolid}" 
+                            FontSize="Large"
+                            Clicked="AddFoodTypes_Clicked"
+                            HorizontalOptions="End"
+                            BackgroundColor="#a1b1b3"
+                            BorderRadius ="20"/>
+                </StackLayout>
                 <ListView x:Name="FoodTypeList" ItemsSource="{Binding _FoodTypeList}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -74,16 +95,22 @@
                                     <!--delete button-->
                                     <Button Text="&#xf1f8;"
                                             FontFamily="{StaticResource FontAwesomeSolid}"
+                                            BackgroundColor="#d46260"
                                             HorizontalOptions="EndAndExpand" 
                                             Clicked="DeleteFoodType_Button_Clicked"
-                                            CommandParameter="{Binding .}"/>
+                                            CommandParameter="{Binding .}"
+                                            BorderRadius ="20"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-            <Button Text="Save Changes" Clicked="SaveButton_Clicked"/>
+            <Button Text="Save Changes" 
+                    Clicked="SaveButton_Clicked" 
+                    BackgroundColor="#a1b1b3" 
+                    BorderRadius="20"
+                    TextColor="Black"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

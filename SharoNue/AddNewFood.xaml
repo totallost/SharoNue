@@ -7,26 +7,55 @@
              x:Class="SharoNue.AddNewFood"
              Visual="Material">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Enter A new Food Description:"/>
-            <Entry x:Name="FoodDesc"/>
-            <Label Text="Select Food Type"/>
+        <StackLayout BackgroundColor="#ffc4ad" Padding="10">
+            <Entry x:Name="FoodDesc" Placeholder="Enter food description"/>
             <Picker x:Name="SelectBox" 
                     SelectedIndex="{Binding Id}" 
-                    ItemDisplayBinding="{Binding FoodTypeDescription}">
+                    ItemDisplayBinding="{Binding FoodTypeDescription}"
+                    Title="Select Food Type">
             </Picker>
-            <Label Text="Breakfast"/>
-            <CheckBox x:Name="ChkBreakfast"/>
+            <StackLayout Orientation="Horizontal" Padding="10">
+                <Label Text="Breakfast" 
+                       FontSize="Large" 
+                       HorizontalOptions="FillAndExpand"  
+                       VerticalOptions="Center"/>
+                <CheckBox x:Name="ChkBreakfast" 
+                          HorizontalOptions="End"/>
+            </StackLayout>
 
-            <Label Text="Snack"/>            
-            <CheckBox x:Name="ChkSnack"/>
+            <StackLayout Orientation="Horizontal" Padding="10">
+                <Label Text="Snack" 
+                       FontSize="Large" 
+                       HorizontalOptions="FillAndExpand"  
+                       VerticalOptions="Center"/>
+                <CheckBox x:Name="ChkSnack" 
+                          HorizontalOptions="End"/>
+            </StackLayout>
 
-            <Label Text="Lunch"/>            
-            <CheckBox x:Name="ChkLunch"/>
+            <StackLayout Orientation="Horizontal" Padding="10">
+                <Label Text="Lunch" 
+                       FontSize="Large" 
+                       HorizontalOptions="FillAndExpand"  
+                       VerticalOptions="Center"/>            
+                <CheckBox x:Name="ChkLunch" 
+                          HorizontalOptions="End"/>
+            </StackLayout>
 
-            <Label Text="Dinner"/>
-            <CheckBox x:Name="ChkDinner"/>
-            <Button Text="Add" Clicked="Add_Button_Clicked" x:Name="Btn"/>
+            <StackLayout Orientation="Horizontal" Padding="10">
+                <Label Text="Dinner" 
+                       FontSize="Large" 
+                       HorizontalOptions="FillAndExpand" 
+                       VerticalOptions="Center"/>
+                <CheckBox x:Name="ChkDinner" 
+                          HorizontalOptions="End"/>
+            </StackLayout>
+
+            <Button Text="&#xf067; Add" 
+                    FontFamily="{StaticResource FontAwesomeSolid}"  
+                    Clicked="Add_Button_Clicked" 
+                    x:Name="Btn"
+                    BackgroundColor="#a1b1b3"
+                    TextColor="Black"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
