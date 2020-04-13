@@ -7,7 +7,7 @@
              x:Class="SharoNue.AddNewFood"
              Visual="Material">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#ffc4ad" Padding="10">
+        <StackLayout BackgroundColor="#f5ddd2" Padding="10">
             <Entry x:Name="FoodDesc" Placeholder="Enter food description"/>
             <Picker x:Name="SelectBox" 
                     SelectedIndex="{Binding Id}" 

@@ -15,7 +15,7 @@
                      Clicked="More_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout  BackgroundColor="#ffc4ad" Padding="10">
+        <StackLayout  BackgroundColor="#f5ddd2" Padding="10">
             <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
             <ListView x:Name="listView" ItemsSource="{Binding FoodsCollection}">
                 <ListView.ItemTemplate>

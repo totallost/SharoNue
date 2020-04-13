@@ -10,7 +10,7 @@
         <ToolbarItem x:Name="PageTitle"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#ffc4ad" Padding="10">
+        <StackLayout BackgroundColor="#f5ddd2" Padding="10">
             <Picker SelectedIndexChanged="MealTypePicker_SelectedIndexChanged"  x:Name="MealTypePicker">
                 <Picker.Items>
                     <x:String>BreakFast</x:String>

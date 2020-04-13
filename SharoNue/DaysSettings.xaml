@@ -7,7 +7,7 @@
              x:Class="SharoNue.DaysSettings"
              Visual="Material">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#ffc4ad">
+        <StackLayout BackgroundColor="#f5ddd2">
             <Button Text="Sunday" 
                     Clicked="Button_Clicked"
                     HorizontalOptions="FillAndExpand"

@@ -13,7 +13,7 @@
                      Clicked="ToolbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ListView x:Name="listView" ItemsSource="{Binding listView}" BackgroundColor="#ffc4ad">
+        <ListView x:Name="listView" ItemsSource="{Binding listView}" BackgroundColor="#f5ddd2">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="SharoNue.MainPage"
              Visual="Material"
-             BackgroundColor="#ffc4ad"
+             BackgroundColor="#f5ddd2"
              Title="SharonNu">
     <StackLayout Orientation="Vertical"
                  VerticalOptions="FillAndExpand">
@@ -18,7 +18,6 @@
                 BackgroundColor="Transparent"
                 BorderColor="White"
                 TextColor="Black"
-                BorderWidth="10"
                 FontSize="Large"/>
         <Button Text="&#xf818; Food List"
                 FontFamily="{StaticResource FontAwesomeSolid}"
@@ -28,7 +27,6 @@
                 BackgroundColor="Transparent"
                 BorderColor="White"
                 TextColor="Black"
-                BorderWidth="10"
                 FontSize="Large"/>
         <Button Text="&#xf4fe; Settings"
                 FontFamily="{StaticResource FontAwesomeSolid}"
@@ -38,7 +36,6 @@
                 BackgroundColor="Transparent"
                 BorderColor="White"
                 TextColor="Black"
-                BorderWidth="10"
                 FontSize="Large"/>
     </StackLayout>
 

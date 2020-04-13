@@ -78,16 +78,16 @@ namespace SharoNue.Helper
                                 switch (i)
                                 {
                                     case 1:
-                                        contentOfMeals.BackgroundColor = Color.FromHex("ffc4ad");
+                                        contentOfMeals.BackgroundColor = Color.FromHex("f5ddd2");
                                         break;
                                     case 2:
-                                        contentOfMeals.BackgroundColor = Color.FromHex("adf5ff");
+                                        contentOfMeals.BackgroundColor = Color.FromHex("d7f2fa");
                                         break;
                                     case 3:
-                                        contentOfMeals.BackgroundColor = Color.FromHex("dbadff");
+                                        contentOfMeals.BackgroundColor = Color.FromHex("f0e1fa");
                                         break;
                                     case 4:
-                                        contentOfMeals.BackgroundColor = Color.FromHex("ffedad");
+                                        contentOfMeals.BackgroundColor = Color.FromHex("faf4d7");
                                         break;
                                 }
 

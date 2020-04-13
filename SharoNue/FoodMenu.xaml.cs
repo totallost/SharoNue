@@ -69,6 +69,7 @@ namespace SharoNue
             {
                 var x = await _connection.Table<Foods>().DeleteAsync(y => y.Id == item.Id);
                 FoodsCollection.Remove(item);
+                listView.ItemsSource = FoodsCollection;
             }
         }
 

@@ -17,14 +17,17 @@ namespace SharoNue
     {
         private SQLiteAsyncConnection _connection;
         private Grid _grid;
-        //private int DaysFromToday;
         public weeklyCalendar(int i)
         {
             InitializeComponent();
-            //MainPage.DaysFromToday += i;
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 
             _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now.AddDays(MainPage.DaysFromToday));
+            var leftSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
+            leftSwipeGesture.Swiped += OnSwiped;
+            var rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
+            rightSwipeGesture.Swiped += OnSwiped;
+
 
             Content = _grid;
 
@@ -115,7 +118,7 @@ namespace SharoNue
         }
         private async void More_Clicked(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("What do you want to do?", "Cancel", null, "Auto Fill", "Sent to Email");
+            string action = await DisplayActionSheet("What do you want to do?", "Cancel", null, "Auto Fill", "Send to Email");
             switch (action)
             {
                 case "Auto Fill":
@@ -124,6 +127,24 @@ namespace SharoNue
                     await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
                     break;
                 case "Sent to Email":
+                    break;
+            }
+        }
+        private void OnSwiped(object sender, SwipedEventArgs e)
+        {
+            switch (e.Direction)
+            {
+                case SwipeDirection.Left:
+                    ToolbarItem_Clicked(new ToolbarItem { Text = "Previous" }, new EventArgs());
+                    break;
+                case SwipeDirection.Right:
+                    ToolbarItem_Clicked(new ToolbarItem { Text = "Next" }, new EventArgs());
+                    break;
+                case SwipeDirection.Up:
+                    // Handle the swipe
+                    break;
+                case SwipeDirection.Down:
+                    // Handle the swipe
                     break;
             }
         }
