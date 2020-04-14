@@ -63,6 +63,8 @@ namespace SharoNue
                         });
                         var x = await _connection.Table<MealLines>().DeleteAsync(y => y.MealId == GlobalMealId);
                         var z = await _connection.InsertAllAsync(mealLines);
+
+                        await CheckIfFoodExists(result);
                     }
                     break;
                 case "Copy to another day":
@@ -116,6 +118,23 @@ namespace SharoNue
                 var z = await _connection.InsertAllAsync(mealLines);
             }
 
+        }
+        private async Task CheckIfFoodExists(string food)
+        {
+            var exist = await _connection.Table<Foods>().Where(x => x.FoodDescription.ToLower() == food.ToLower()).FirstOrDefaultAsync();
+            if (exist == null)
+            {
+                var answer = await DisplayAlert("Info", "This food doesn't exist in the food-list. whould you like to add it?", "YES", "NO");
+                if (answer)
+                {
+                    var newFood = new Foods
+                    {
+                        FoodDescription = food,
+                        MealTypeList = mealLines[0].MealTypeId.ToString()
+                    };
+                    await _connection.InsertAsync(newFood);
+                }
+            }
         }
 
     }
