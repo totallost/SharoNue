@@ -27,7 +27,8 @@ namespace SharoNue
             leftSwipeGesture.Swiped += OnSwiped;
             var rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
             rightSwipeGesture.Swiped += OnSwiped;
-
+            _grid.GestureRecognizers.Add(leftSwipeGesture);
+            _grid.GestureRecognizers.Add(rightSwipeGesture);
 
             Content = _grid;
 

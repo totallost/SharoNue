@@ -27,9 +27,11 @@ namespace SharoNue.Helper
                     if (i == 0 && j != 7)
                     {
                         Label label = new Label();
-                        label.Text = HelperMethods.WeekDays(j, dt).ToString("ddd").ToUpper() + "\n" + HelperMethods.WeekDays(j, dt).ToString("dd/MM/yy");
-                        label.ClassId = i.ToString() + j.ToString();
-                        //label.BackgroundColor = Color.FromHex("ffafd3");
+                        //label.Text = HelperMethods.WeekDays(j, dt).ToString("ddd").ToUpper() + "\n" + HelperMethods.WeekDays(j, dt).ToString("dd/MM/yy");
+                        label.Text = dt.AddDays(j).ToString("ddd").ToUpper() + "\n" + dt.AddDays(j).ToString("dd/MM/yy");
+                        //label.ClassId = i.ToString() + j.ToString();
+                        label.ClassId = i.ToString()+((int)dt.AddDays(j).DayOfWeek).ToString();
+                        //grid.Children.Add(label, j, i);
                         grid.Children.Add(label, j, i);
                     }
                     else
@@ -72,7 +74,8 @@ namespace SharoNue.Helper
                             else
                             {
                                 Label contentOfMeals = new Label();
-                                contentOfMeals.ClassId = i.ToString() + j.ToString();
+                                //contentOfMeals.ClassId = i.ToString() + j.ToString();
+                                contentOfMeals.ClassId = i.ToString() + ((int)dt.AddDays(j).DayOfWeek).ToString();
                                 contentOfMeals.GestureRecognizers.Add(tgr);
                                 //contentOfMeals.BackgroundColor = Color.AliceBlue;
                                 switch (i)
@@ -103,8 +106,10 @@ namespace SharoNue.Helper
         public static async Task PopulateLabels(Grid grid, DateTime dt)
         {
             SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-            var startOfWeekDate = HelperMethods.WeekDays(0, dt);
-            var EndOfWeekDate = HelperMethods.WeekDays(6, dt);
+            //var startOfWeekDate = HelperMethods.WeekDays(0, dt);
+            //var EndOfWeekDate = HelperMethods.WeekDays(6, dt);
+            var startOfWeekDate = dt;
+            var EndOfWeekDate = dt.AddDays(6);
 
             //get meals headers
             var meals = await _connection.Table<Meal>().Where(x => x.MealDate >= startOfWeekDate && x.MealDate <= EndOfWeekDate).ToListAsync();
