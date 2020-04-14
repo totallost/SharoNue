@@ -178,14 +178,26 @@ namespace SharoNue
             ConstantFoodEntry.Text = null;
         }
 
-        private async void SaveButton_Clicked(object sender, EventArgs e)
+        private async Task SaveChanges()
         {
-            var answer = await DisplayAlert("Warning", "All changes will be saved", "Ok", "Cancel");
-            if (answer)
+            await _connection.UpdateAllAsync(_settings);
+        }
+
+        protected async override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            await SaveChanges();
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            Task action = SaveChanges();
+            action.ContinueWith(task =>
             {
-                await _connection.UpdateAllAsync(_settings);
-                await DisplayAlert("Info", "Settings Saved", "Ok");
-            }
+                Navigation.PopAsync();
+            });
+            Navigation.PopAsync();
+            return true;
         }
     }
 }

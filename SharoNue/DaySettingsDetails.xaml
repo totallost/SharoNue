@@ -106,11 +106,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-            <Button Text="Save Changes" 
-                    Clicked="SaveButton_Clicked" 
-                    BackgroundColor="#a1b1b3" 
-                    BorderRadius="20"
-                    TextColor="Black"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
