@@ -23,24 +23,26 @@ namespace SharoNue
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 
             _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now.AddDays(MainPage.DaysFromToday));
+
+            Content = _grid;
+
+
+        }
+        protected override async void OnAppearing()
+        {
+            await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
+            CreateSwipeGesture();
+            base.OnAppearing();
+        }
+        private void CreateSwipeGesture()
+        {
             var leftSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Left };
             leftSwipeGesture.Swiped += OnSwiped;
             var rightSwipeGesture = new SwipeGestureRecognizer { Direction = SwipeDirection.Right };
             rightSwipeGesture.Swiped += OnSwiped;
             _grid.GestureRecognizers.Add(leftSwipeGesture);
             _grid.GestureRecognizers.Add(rightSwipeGesture);
-
-            Content = _grid;
-
-
         }
-
-        protected override async void OnAppearing()
-        {
-            await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
-            base.OnAppearing();
-        }
-
         public async void OnLabelClicked(object s, EventArgs e)
         {
             Label label = (Label)s;
