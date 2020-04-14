@@ -67,22 +67,14 @@
                     </ListView>
             </StackLayout>
             <StackLayout x:Name="FoodTypeStack">
-                <Label Text="Food types"/>
                 <StackLayout Orientation="Horizontal">
                     <Picker x:Name="SelectBox" 
                             SelectedIndex="{Binding Id}" 
                             ItemDisplayBinding="{Binding FoodTypeDescription}"
                             Title="Food Types"
-                            HorizontalOptions="FillAndExpand">
+                            HorizontalOptions="FillAndExpand"
+                            SelectedIndexChanged="SelectBox_SelectedIndexChanged">
                     </Picker>
-                    <!--add button-->
-                    <Button Text="&#xf067;" 
-                            FontFamily="{StaticResource FontAwesomeSolid}" 
-                            FontSize="Large"
-                            Clicked="AddFoodTypes_Clicked"
-                            HorizontalOptions="End"
-                            BackgroundColor="#a1b1b3"
-                            BorderRadius ="20"/>
                 </StackLayout>
                 <ListView x:Name="FoodTypeList" ItemsSource="{Binding _FoodTypeList}">
                     <ListView.ItemTemplate>

@@ -119,10 +119,9 @@ namespace SharoNue
             var item = (Picker)sender;
             PopulateSettings(item.SelectedIndex);
         }
-
-        private void AddFoodTypes_Clicked(object sender, EventArgs e)
+        private void SelectBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(SelectBox.SelectedItem.ToString() != "0")
+            if (SelectBox.SelectedItem.ToString() != "0")
             {
                 var addItem = (FoodTypes)SelectBox.SelectedItem;
                 _FoodTypeList.Add(addItem.FoodTypeDescription);
@@ -133,7 +132,7 @@ namespace SharoNue
                     if (setting.MealID == mealType)
                         setting.ListOfFoodTypes = string.Join(",", _FoodTypeList);
                 }
-            }       
+            }
         }
 
         private void DeleteFoodType_Button_Clicked(object sender, EventArgs e)
