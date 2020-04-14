@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="FooList\FoodMenu.xaml.cs">
+    <Compile Update="FoodList\FoodMenu.xaml.cs">
       <DependentUpon>FoodMenu.xaml</DependentUpon>
     </Compile>
     <Compile Update="PlanMenu\weeklyCalendar.xaml.cs">
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="FooList\AddNewFood.xaml">
+    <EmbeddedResource Update="FoodList\AddNewFood.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="PlanMenu\ChooseMealCalendar.xaml">
@@ -35,7 +35,7 @@
     <EmbeddedResource Update="Settings\DaysSettings.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="FooList\FoodMenu.xaml">
+    <EmbeddedResource Update="FoodList\FoodMenu.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="PlanMenu\MealDetails.xaml">
