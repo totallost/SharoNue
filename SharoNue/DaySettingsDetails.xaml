@@ -28,7 +28,6 @@
                         OnColor="#a1b1b3"/>
             </StackLayout>
             <StackLayout x:Name="ConstantFoodsStack">
-                <Label Text="Constant Foods"/>
                 <StackLayout Orientation="Horizontal">
                     <Entry x:Name="ConstantFoodEntry" 
                            Placeholder="Enter new constant food"

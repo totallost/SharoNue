@@ -76,7 +76,7 @@ namespace SharoNue
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             var searchString = e.NewTextValue.ToLower();
-            listView.ItemsSource = FoodsCollection.Where(x => x.FoodDescription.ToLower().StartsWith(searchString))
+            listView.ItemsSource = FoodsCollection.Where(x => x.FoodDescription.ToLower().Contains(searchString))
                                                   .ToList();
         }
     }
