@@ -14,34 +14,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="FoodMenu.xaml.cs">
+    <Compile Update="FooList\FoodMenu.xaml.cs">
       <DependentUpon>FoodMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Update="weeklyCalendar.xaml.cs">
+    <Compile Update="PlanMenu\weeklyCalendar.xaml.cs">
       <DependentUpon>WeeklyCalendar.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="AddNewFood.xaml">
+    <EmbeddedResource Update="FooList\AddNewFood.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="ChooseMealCalendar.xaml">
+    <EmbeddedResource Update="PlanMenu\ChooseMealCalendar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="DaySettingsDetails.xaml">
+    <EmbeddedResource Update="Settings\DaySettingsDetails.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="DaysSettings.xaml">
+    <EmbeddedResource Update="Settings\DaysSettings.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="FoodMenu.xaml">
+    <EmbeddedResource Update="FooList\FoodMenu.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="MealDetails.xaml">
+    <EmbeddedResource Update="PlanMenu\MealDetails.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="WeeklyCalendar.xaml">
+    <EmbeddedResource Update="PlanMenu\weeklyCalendar.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
