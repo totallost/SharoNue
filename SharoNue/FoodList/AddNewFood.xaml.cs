@@ -4,6 +4,7 @@ using SharoNue.View;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace SharoNue
     {
         private SQLiteAsyncConnection _connection;
         private Foods _food;
+        private List<FoodTypes> _GlobalFoodTypesList;
+        private ObservableCollection<FoodTypes> _FoodTypeList = new ObservableCollection<FoodTypes>();
         public AddNewFood(Foods foods)
         {
             InitializeComponent();
@@ -36,6 +39,7 @@ namespace SharoNue
             if (foodTypesList != null)
             {
                 SelectBox.ItemsSource = foodTypesList;
+                _GlobalFoodTypesList = foodTypesList;
             }
         }
 
@@ -65,6 +69,12 @@ namespace SharoNue
                         FoodType = SelectBox.SelectedIndex+1,
                         MealTypeList = CreateMealTypeList(), 
                     };
+                    string listString = "";
+                    foreach (var type in _FoodTypeList)
+                    {
+                        listString += type.Id.ToString() + ",";
+                    }
+                    newFood.FoodTypeList = listString;
                     var x = await _connection.InsertAsync(newFood);
                     if (x == 1)
                         await DisplayAlert("Notification", newFood.FoodDescription + " was added", "OK");
@@ -75,6 +85,7 @@ namespace SharoNue
                     ChkSnack.IsChecked = false;
                     ChkLunch.IsChecked = false;
                     ChkDinner.IsChecked = false;
+                    _FoodTypeList.Clear();
                 }
                 else
                 {
@@ -102,11 +113,12 @@ namespace SharoNue
         }
         private void PopulatePage(Foods foods)
         {
+            PopulateFoodTypes(foods);
             Btn.Text = "Save";
             Btn.Clicked -= Add_Button_Clicked;
             Btn.Clicked += Save_Button_Clicked;
             FoodDesc.Text = foods.FoodDescription;
-            SelectBox.SelectedIndex = foods.FoodType-1;
+            //SelectBox.SelectedIndex = foods.FoodType-1;
             if (foods.MealTypeList != null)
             {
                 if (foods.MealTypeList.Contains("1"))
@@ -120,12 +132,32 @@ namespace SharoNue
             }
 
         }
+
+        private void PopulateFoodTypes(Foods foods)
+        {
+            if (foods.FoodTypeList == null)
+                foods.FoodTypeList = ",";
+            var typelist = foods.FoodTypeList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var type in typelist)
+            {
+                var newType = _GlobalFoodTypesList.Where(x => x.Id == int.Parse(type)).SingleOrDefault();
+                _FoodTypeList.Add(newType);
+            }
+            FoodTypeList.ItemsSource = _FoodTypeList;
+        }
+
         private async void Save_Button_Clicked(object sender, EventArgs e)
         {
             _food.FoodDescription = FoodDesc.Text;
             _food.FoodType = SelectBox.SelectedIndex+1;
-            _food.MealTypeList = CreateMealTypeList(); 
-            if(!await CheckIfFoodExist(_food.FoodDescription))
+            _food.MealTypeList = CreateMealTypeList();
+            string listString = "";
+            foreach (var type in _FoodTypeList)
+            {
+                listString += type.Id.ToString() + ",";
+            }
+            _food.FoodTypeList = listString;
+            if (!await CheckIfFoodExist(_food.FoodDescription))
             {
                 await _connection.UpdateAsync(_food);
                 await DisplayAlert("Save", "Food Saved", "OK");
@@ -135,6 +167,27 @@ namespace SharoNue
             {
                 await DisplayAlert("Error", FoodDesc.Text+" already exists", "OK");
             }
+        }
+
+        private void SelectBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SelectBox.SelectedItem.ToString() != "0")
+            {
+                var addItem = (FoodTypes)SelectBox.SelectedItem;
+                if (addItem != null)
+                {
+                    _FoodTypeList.Add(addItem);
+                    FoodTypeList.ItemsSource = _FoodTypeList;
+                }
+            }
+        }
+
+        private void DeleteFoodType_Button_Clicked(object sender, EventArgs e)
+        {
+            var itemSender = (Button)sender;
+            var item = itemSender.BindingContext as FoodTypes;
+            _FoodTypeList.Remove(item);
+            FoodTypeList.ItemsSource = _FoodTypeList;
         }
     }
 }

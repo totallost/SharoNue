@@ -7,14 +7,9 @@
              x:Class="SharoNue.AddNewFood"
              Visual="Material">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#f5ddd2" Padding="10">
+        <StackLayout BackgroundColor="#f5ddd2" Padding="5">
             <Entry x:Name="FoodDesc" Placeholder="Enter food description"/>
-            <Picker x:Name="SelectBox" 
-                    SelectedIndex="{Binding Id}" 
-                    ItemDisplayBinding="{Binding FoodTypeDescription}"
-                    Title="Select Food Type">
-            </Picker>
-            <StackLayout Orientation="Horizontal" Padding="10">
+            <StackLayout Orientation="Horizontal">
                 <Label Text="Breakfast" 
                        FontSize="Large" 
                        HorizontalOptions="FillAndExpand"  
@@ -23,7 +18,7 @@
                           HorizontalOptions="End"/>
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Padding="10">
+            <StackLayout Orientation="Horizontal">
                 <Label Text="Snack" 
                        FontSize="Large" 
                        HorizontalOptions="FillAndExpand"  
@@ -32,7 +27,7 @@
                           HorizontalOptions="End"/>
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Padding="10">
+            <StackLayout Orientation="Horizontal">
                 <Label Text="Lunch" 
                        FontSize="Large" 
                        HorizontalOptions="FillAndExpand"  
@@ -41,7 +36,7 @@
                           HorizontalOptions="End"/>
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Padding="10">
+            <StackLayout Orientation="Horizontal">
                 <Label Text="Dinner" 
                        FontSize="Large" 
                        HorizontalOptions="FillAndExpand" 
@@ -49,6 +44,35 @@
                 <CheckBox x:Name="ChkDinner" 
                           HorizontalOptions="End"/>
             </StackLayout>
+            
+            <Picker x:Name="SelectBox" 
+                    SelectedIndex="{Binding Id}" 
+                    ItemDisplayBinding="{Binding FoodTypeDescription}"
+                    Title="Select Food Type"
+                    SelectedIndexChanged="SelectBox_SelectedIndexChanged">
+            </Picker>
+            <ListView x:Name="FoodTypeList" ItemsSource="{Binding _FoodTypeList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                <Label Text="{Binding .FoodTypeDescription}" 
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="Start"
+                                           FontSize="Large"/>
+                                <!--delete button-->
+                                <Button Text="&#xf1f8;"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            BackgroundColor="#d46260"
+                                            HorizontalOptions="EndAndExpand" 
+                                            Clicked="DeleteFoodType_Button_Clicked"
+                                            CommandParameter="{Binding .Id}"
+                                            BorderRadius ="20"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
             <Button Text="&#xf067; Add" 
                     FontFamily="{StaticResource FontAwesomeSolid}"  

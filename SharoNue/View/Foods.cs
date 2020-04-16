@@ -11,6 +11,7 @@ namespace SharoNue.View
         public int Id { get; set; }
         public string FoodDescription { get; set; }
         public int FoodType { get; set; }
+        public string FoodTypeList { get; set; }
         public string MealTypeList { get; set; }
 
     }

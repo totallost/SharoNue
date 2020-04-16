@@ -84,10 +84,12 @@ namespace SharoNue.Helper
                         if (foodTypeDB != null)
                         {
                             var mealType = meal.MealType.ToString();
+                            //create a different method that runs on all types of specific food in Foods
                             var listOfRelevantFoods = await _connection.Table<Foods>()
                                                                  .Where(x => x.FoodType == foodTypeDB.Id)
                                                                  .Where(x => x.MealTypeList.Contains(mealType))
                                                                  .ToListAsync();
+                            //
                             if (listOfRelevantFoods.Count != 0)
                             {
                                 Random random = new Random();
