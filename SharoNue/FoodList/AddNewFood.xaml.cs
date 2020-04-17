@@ -20,7 +20,7 @@ namespace SharoNue
         private SQLiteAsyncConnection _connection;
         private Foods _food;
         private List<FoodTypes> _GlobalFoodTypesList;
-        private ObservableCollection<FoodTypes> _FoodTypeList = new ObservableCollection<FoodTypes>();
+        private ObservableCollection<string> _FoodTypeList = new ObservableCollection<string>();
         public AddNewFood(Foods foods)
         {
             InitializeComponent();
@@ -72,7 +72,7 @@ namespace SharoNue
                     string listString = "";
                     foreach (var type in _FoodTypeList)
                     {
-                        listString += type.Id.ToString() + ",";
+                        listString += type.ToString() + ",";
                     }
                     newFood.FoodTypeList = listString;
                     var x = await _connection.InsertAsync(newFood);
@@ -138,11 +138,7 @@ namespace SharoNue
             if (foods.FoodTypeList == null)
                 foods.FoodTypeList = ",";
             var typelist = foods.FoodTypeList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var type in typelist)
-            {
-                var newType = _GlobalFoodTypesList.Where(x => x.Id == int.Parse(type)).SingleOrDefault();
-                _FoodTypeList.Add(newType);
-            }
+            _FoodTypeList = new ObservableCollection<string>(typelist);
             FoodTypeList.ItemsSource = _FoodTypeList;
         }
 
@@ -151,12 +147,7 @@ namespace SharoNue
             _food.FoodDescription = FoodDesc.Text;
             _food.FoodType = SelectBox.SelectedIndex+1;
             _food.MealTypeList = CreateMealTypeList();
-            string listString = "";
-            foreach (var type in _FoodTypeList)
-            {
-                listString += type.Id.ToString() + ",";
-            }
-            _food.FoodTypeList = listString;
+            _food.FoodTypeList = string.Join(",",_FoodTypeList);
             if (!await CheckIfFoodExist(_food.FoodDescription))
             {
                 await _connection.UpdateAsync(_food);
@@ -176,7 +167,7 @@ namespace SharoNue
                 var addItem = (FoodTypes)SelectBox.SelectedItem;
                 if (addItem != null)
                 {
-                    _FoodTypeList.Add(addItem);
+                    _FoodTypeList.Add(addItem.FoodTypeDescription);
                     FoodTypeList.ItemsSource = _FoodTypeList;
                 }
             }
@@ -185,8 +176,7 @@ namespace SharoNue
         private void DeleteFoodType_Button_Clicked(object sender, EventArgs e)
         {
             var itemSender = (Button)sender;
-            var item = itemSender.BindingContext as FoodTypes;
-            _FoodTypeList.Remove(item);
+            _FoodTypeList.Remove(itemSender.CommandParameter.ToString());
             FoodTypeList.ItemsSource = _FoodTypeList;
         }
     }

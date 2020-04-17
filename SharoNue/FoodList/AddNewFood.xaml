@@ -56,7 +56,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                <Label Text="{Binding .FoodTypeDescription}" 
+                                <Label Text="{Binding .}" 
                                            VerticalOptions="Center" 
                                            HorizontalOptions="Start"
                                            FontSize="Large"/>
@@ -66,7 +66,7 @@
                                             BackgroundColor="#d46260"
                                             HorizontalOptions="EndAndExpand" 
                                             Clicked="DeleteFoodType_Button_Clicked"
-                                            CommandParameter="{Binding .Id}"
+                                            CommandParameter="{Binding .}"
                                             BorderRadius ="20"/>
                             </StackLayout>
                         </ViewCell>
