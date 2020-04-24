@@ -63,7 +63,7 @@ namespace SharoNue
                 label.ClassId = label.ClassId + mealIdFromDb.ToString();
                 mealId = mealIdFromDb.ToString();
             }
-            await Navigation.PushAsync(new MealDetails(day,int.Parse(mealId)));
+            await Navigation.PushAsync(new MealDetails(day,int.Parse(mealId), mealtype));
         }
         private TapGestureRecognizer CreateTapGesture()
         {

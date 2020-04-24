@@ -57,62 +57,123 @@ namespace SharoNue.Helper
                                 x = await _connection.InsertAsync(meal);
                             }
                         }
-                        await PopulateMeal(meal, foods, settings);
-                    }
+                        //await PopulateMeal(meal, foods, settings);
+                        await PopulateMeal(meal, foods, settings);                    }
                 }
             }
         }
-
-        public async Task PopulateMeal(Meal meal, List<Foods> foods, List<Settings> settings)
+        private List<Foods> CreateFoodsList(List<Foods> foods, List<string> settingsTypeList)
         {
-            List<MealLines> mealLinesList = new List<MealLines>();
+            if (settingsTypeList.Count == 0)
+                return new List<Foods>();
+
+            var newList = new List<Foods>();
+
+            foreach(var food in foods)
+            {
+                if (food.FoodTypeList == null)
+                    continue;
+                var foodtypeList = food.FoodTypeList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (foodtypeList.Count == 0)
+                    continue;
+                if (foodtypeList.Count > settingsTypeList.Count)
+                    continue;
+                if (settingsTypeList.Count == 1 && foodtypeList.Count == 1)
+                    if (settingsTypeList[0] == foodtypeList[0])
+                    {
+                        newList.Add(food);
+                        continue;
+                    }
+                //var ifEqualList = new List<string>();
+                int counter = 0;
+                foreach(var foodtype in foodtypeList)
+                {
+                    var isExist = settingsTypeList.Exists(x => x == foodtype);
+                    if (isExist)
+                        counter++;
+                }
+                if (foodtypeList.Count == counter)
+                    newList.Add(food);
+
+            }
+            return newList;
+        }
+
+        private async Task PopulateMeal(Meal meal, List<Foods> foods, List<Settings> settings)
+        {
             var currentSetting = settings.Where(x => x.IdDay == meal.MealDay)
                                          .Where(x => x.MealID == meal.MealType)
                                          .SingleOrDefault();
-            List<string> listOfFoods;
+            List<MealLines> mealLinesList = new List<MealLines>();
             if (currentSetting.IsAutoPopulate)
             {
-                listOfFoods = currentSetting.ListOfFoodTypes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                                            .ToList();
-                if (listOfFoods.Count > 0)
+                var settingsTypeList = currentSetting.ListOfFoodTypes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+
+                //creating the food list with all the valid food that can be populated.
+                var newFoodList = CreateFoodsList(foods, settingsTypeList);
+
+
+                //the populating
+                if (newFoodList.Count != 0)
                 {
-                    foreach (var foodType in listOfFoods)
+                    Random random = new Random();
+                    int foodListCount = newFoodList.Count;
+                    int counter = 0;
+                    while (counter < foodListCount)
                     {
-                        var foodTypeDB = await _connection.Table<FoodTypes>()
-                                                           .Where(x => x.FoodTypeDescription == foodType)
-                                                           .FirstOrDefaultAsync();
-                        if (foodTypeDB != null)
+                        var index = random.Next(newFoodList.Count);
+                        var foodToPopulate = newFoodList[index];
+                        var foodTypeOfFoodToPopulate = foodToPopulate.FoodTypeList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                        var isOk = false;
+
+                        List<string> indexesToDelete = new List<string>();
+                        foreach (var foodToPopulateType in foodTypeOfFoodToPopulate)
                         {
-                            var mealType = meal.MealType.ToString();
-                            //create a different method that runs on all types of specific food in Foods
-                            var listOfRelevantFoods = await _connection.Table<Foods>()
-                                                                 .Where(x => x.FoodType == foodTypeDB.Id)
-                                                                 .Where(x => x.MealTypeList.Contains(mealType))
-                                                                 .ToListAsync();
-                            //
-                            if (listOfRelevantFoods.Count != 0)
+                            //check the how many times does the foodtype exist 
+                            var x = settingsTypeList.Exists(f => f == foodToPopulateType);
+                            if (x)
+                                indexesToDelete.Add(foodToPopulateType);
+                        }
+                        if (indexesToDelete.Count == foodTypeOfFoodToPopulate.Count)
+                        {
+                            //if the amount of foodtype exist the same as in the food then delete from foodtype settings
+                            isOk = true;
+                            foreach (var del in indexesToDelete)
                             {
-                                Random random = new Random();
-                                var index = random.Next(listOfRelevantFoods.Count);
-                                var foodDesc = listOfRelevantFoods[index].FoodDescription;
-                                mealLinesList.Add(new MealLines
-                                {
-                                    MealId = meal.MealId,
-                                    MealTypeId = meal.MealType,
-                                    FoodDesc = foodDesc
-                                });
+                                var i = settingsTypeList.FindIndex(x => x == del);
+                                settingsTypeList[i] = "";
                             }
                         }
+                        if (isOk)
+                        {
+                            //add meal line 
+                            mealLinesList.Add(new MealLines
+                            {
+                                MealId = meal.MealId,
+                                MealTypeId = meal.MealType,
+                                FoodDesc = foodToPopulate.FoodDescription
+                            });
+                        }
+                        //remove food from foods list
+                        newFoodList.RemoveAt(index);
+                        //of all food type settings are empty (it means all are populated) then end loop
+                        var notEmptyTypes = settingsTypeList.Count(x => x != "");
+                        if (notEmptyTypes == 0)
+                        {
+                            counter = foodListCount;
+                            continue;
+                        }
+                        counter++;
                     }
                 }
             }
             else
             {
-                listOfFoods = currentSetting.ListOfConstantFoods.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                                                .ToList();
-                if (listOfFoods.Count > 0)
+                var settingsConstantFoodList = currentSetting.ListOfConstantFoods.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (settingsConstantFoodList.Count > 0)
                 {
-                    foreach (var food in listOfFoods)
+                    foreach (var food in settingsConstantFoodList)
                     {
                         mealLinesList.Add(new MealLines
                         {

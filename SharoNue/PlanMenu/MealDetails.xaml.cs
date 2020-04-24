@@ -19,12 +19,14 @@ namespace SharoNue
         private ObservableCollection<MealLines> mealLines { get; set; }
         private int GlobalMealId { get; set; }
         private int GlobalDay { get; set; }
-        public MealDetails(int day, int mealId)
+        private int GlobalMealType { get; set; }
+        public MealDetails(int day, int mealId, int mealType)
         {  
             InitializeComponent();
             mealLines = null;
             GlobalMealId = mealId;
             GlobalDay = day;
+            GlobalMealType = mealType;
 
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
         }
@@ -59,7 +61,7 @@ namespace SharoNue
                         {
                             FoodDesc = result,
                             MealId = GlobalMealId,
-                            MealTypeId = 1
+                            MealTypeId = GlobalMealType
                         });
                         var x = await _connection.Table<MealLines>().DeleteAsync(y => y.MealId == GlobalMealId);
                         var z = await _connection.InsertAllAsync(mealLines);
