@@ -191,9 +191,9 @@ namespace SharoNue
         protected override bool OnBackButtonPressed()
         {
             Task action = SaveChanges();
-            action.ContinueWith(task =>
+            action.ContinueWith(task => 
             {
-                Navigation.PopAsync();
+                DisplayAlert("message", "items saved", "ok");
             });
             Navigation.PopAsync();
             return true;
