@@ -195,6 +195,7 @@ namespace SharoNue
             {
                 DisplayAlert("message", "items saved", "ok");
             });
+            DisplayAlert("Info", "Changes Saved", "OK");
             Navigation.PopAsync();
             return true;
         }
