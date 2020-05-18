@@ -131,16 +131,18 @@ namespace SharoNue
                     break;
                 case "Sent to Email":
                     break;
+                case "Reset week":
+                    break;
             }
         }
         private void OnSwiped(object sender, SwipedEventArgs e)
         {
             switch (e.Direction)
             {
-                case SwipeDirection.Left:
+                case SwipeDirection.Right:
                     ToolbarItem_Clicked(new ToolbarItem { Text = "Previous" }, new EventArgs());
                     break;
-                case SwipeDirection.Right:
+                case SwipeDirection.Left:
                     ToolbarItem_Clicked(new ToolbarItem { Text = "Next" }, new EventArgs());
                     break;
                 case SwipeDirection.Up:
