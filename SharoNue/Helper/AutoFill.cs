@@ -62,10 +62,11 @@ namespace SharoNue.Helper
                 }
             }
         }
-        private List<Foods> CreateFoodsList(List<Foods> foods, List<string> settingsTypeList)
+        private List<Foods> CreateFoodsList(List<Foods> foods, List<string> settingsTypeList, Meal meal)
         {
             if (settingsTypeList.Count == 0)
                 return new List<Foods>();
+            
 
             var newList = new List<Foods>();
 
@@ -73,6 +74,13 @@ namespace SharoNue.Helper
             {
                 if (food.FoodTypeList == null)
                     continue;
+                //check if mealtype is checked in this food 
+                var mealTypList = food.MealTypeList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                if (mealTypList.Count == 0)
+                    continue;
+                if (!mealTypList.Exists(x => x == meal.MealType.ToString()))
+                    continue;
+          
                 var foodtypeList = food.FoodTypeList.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 if (foodtypeList.Count == 0)
                     continue;
@@ -111,8 +119,7 @@ namespace SharoNue.Helper
 
 
                 //creating the food list with all the valid food that can be populated.
-                var newFoodList = CreateFoodsList(foods, settingsTypeList);
-
+                var newFoodList = CreateFoodsList(foods, settingsTypeList, meal);              
 
                 //the populating
                 if (newFoodList.Count != 0)
