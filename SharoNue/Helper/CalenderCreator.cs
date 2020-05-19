@@ -103,13 +103,28 @@ namespace SharoNue.Helper
             return grid;
         }
 
+        public static async Task ResetWeek(Grid grid, DateTime dt)
+        {
+            SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
+            var startOfWeekDate = dt.Date;
+            var EndOfWeekDate = dt.AddDays(6).Date;
+            var meals = await _connection.Table<Meal>().Where(x => x.MealDate >= startOfWeekDate && x.MealDate <= EndOfWeekDate).ToListAsync();
+            if (meals.Count != 0)
+            {
+                var minMealId = meals[0].MealId;
+                var maxMealId = meals[meals.Count - 1].MealId;
+                await _connection.Table<MealLines>().DeleteAsync(x => x.MealId >= minMealId && x.MealId <= maxMealId);
+                await _connection.Table<Meal>().DeleteAsync(x => x.MealDate >= startOfWeekDate && x.MealDate <= EndOfWeekDate);
+            }
+        }
+
         public static async Task PopulateLabels(Grid grid, DateTime dt)
         {
             SQLiteAsyncConnection _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
             //var startOfWeekDate = HelperMethods.WeekDays(0, dt);
             //var EndOfWeekDate = HelperMethods.WeekDays(6, dt);
-            var startOfWeekDate = dt;
-            var EndOfWeekDate = dt.AddDays(6);
+            var startOfWeekDate = dt.Date;
+            var EndOfWeekDate = dt.AddDays(6).Date;
 
             //get meals headers
             var meals = await _connection.Table<Meal>().Where(x => x.MealDate >= startOfWeekDate && x.MealDate <= EndOfWeekDate).ToListAsync();

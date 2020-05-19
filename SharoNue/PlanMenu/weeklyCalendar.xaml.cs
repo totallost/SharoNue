@@ -121,7 +121,7 @@ namespace SharoNue
         }
         private async void More_Clicked(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("What do you want to do?", "Cancel", null, "Auto Fill", "Send to Email");
+            string action = await DisplayActionSheet("What do you want to do?", "Cancel", null, "Auto Fill", "Reset week");
             switch (action)
             {
                 case "Auto Fill":
@@ -129,9 +129,10 @@ namespace SharoNue
                     await autoFill.populateDatabase(_grid, MainPage.DaysFromToday);
                     await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
                     break;
-                case "Sent to Email":
-                    break;
                 case "Reset week":
+                    await CalenderCreator.ResetWeek(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
+                    //_grid = null;
+                    await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
                     break;
             }
         }
