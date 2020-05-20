@@ -131,7 +131,8 @@ namespace SharoNue
                     break;
                 case "Reset week":
                     await CalenderCreator.ResetWeek(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
-                    //_grid = null;
+                    _grid = null;
+                    _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now.AddDays(MainPage.DaysFromToday));
                     await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
                     break;
             }
