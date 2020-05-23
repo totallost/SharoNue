@@ -22,7 +22,7 @@ namespace SharoNue
             InitializeComponent();
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 
-            _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now.AddDays(MainPage.DaysFromToday));
+            _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), CreteTapGestureTop(), DateTime.Now.AddDays(MainPage.DaysFromToday));
 
             Content = _grid;
 
@@ -69,6 +69,12 @@ namespace SharoNue
         {
             var tgr = new TapGestureRecognizer();
             tgr.Tapped += (s, e) => OnLabelClicked(s, e);
+            return tgr;
+        }
+        private TapGestureRecognizer CreteTapGestureTop()
+        {
+            var tgr = new TapGestureRecognizer();
+            tgr.Tapped += (s, e) => TopLabelsClick(s, e);
             return tgr;
         }
         private async Task<int> CreateNewMeal(Label currentLabel)
@@ -132,7 +138,7 @@ namespace SharoNue
                 case "Reset week":
                     await CalenderCreator.ResetWeek(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
                     _grid = null;
-                    _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now.AddDays(MainPage.DaysFromToday));
+                    _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), CreteTapGestureTop(), DateTime.Now.AddDays(MainPage.DaysFromToday));
                     await CalenderCreator.PopulateLabels(_grid, DateTime.Now.AddDays(MainPage.DaysFromToday));
                     break;
             }
@@ -154,6 +160,10 @@ namespace SharoNue
                     // Handle the swipe
                     break;
             }
+        }
+        private async void TopLabelsClick(object s, EventArgs e)
+        {
+            await Navigation.PushAsync(new DaysSettings());
         }
     }
 }

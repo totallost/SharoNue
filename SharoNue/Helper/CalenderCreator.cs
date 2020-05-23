@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace SharoNue.Helper
 {
-    class CalenderCreator
+    class CalenderCreator : ContentPage
     {
-        public static Grid CreateCalendar(TapGestureRecognizer tgr, DateTime dt)
+        public static Grid CreateCalendar(TapGestureRecognizer tgr, TapGestureRecognizer tgr2, DateTime dt)
         {
             var grid = new Grid();
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0.4, GridUnitType.Star) });
@@ -28,9 +28,11 @@ namespace SharoNue.Helper
                     //date row
                     if (i == 0 && j != 7)
                     {
+                        
                         Label label = new Label();
                         label.Text = dt.AddDays(j).ToString("ddd").ToUpper() + "\n" + dt.AddDays(j).ToString("dd/MM/yy");
                         label.ClassId = i.ToString()+((int)dt.AddDays(j).DayOfWeek).ToString();
+                        label.GestureRecognizers.Add(tgr2);
                         grid.Children.Add(label, j, i);
                     }
                     else

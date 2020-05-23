@@ -27,7 +27,7 @@ namespace SharoNue
 
             _connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 
-            _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), DateTime.Now);
+            _grid = CalenderCreator.CreateCalendar(CreateTapGesture(), CreateTapGestureTop(), DateTime.Now);
 
             Content = _grid;
         }
@@ -36,11 +36,21 @@ namespace SharoNue
             await CalenderCreator.PopulateLabels(_grid, DateTime.Now);
             base.OnAppearing();
         }
+        private TapGestureRecognizer CreateTapGestureTop()
+        {
+            var tgr = new TapGestureRecognizer();
+            tgr.Tapped += (s, e) => TopLabelsClick(s, e);
+            return tgr;
+        }
         private TapGestureRecognizer CreateTapGesture()
         {
             var tgr = new TapGestureRecognizer();
             tgr.Tapped += (s, e) => OnLabelClicked(s, e);
             return tgr;
+        }
+        private async void TopLabelsClick(object s, EventArgs e)
+        {
+            await Navigation.PushAsync(new DaysSettings());
         }
         public async void OnLabelClicked(object s, EventArgs e)
         {
